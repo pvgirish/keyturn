@@ -1,0 +1,472 @@
+=================== PHASE same (final5): reset + setup 2026-09-27T04:24:19Z
+Stopping and removing this kit's containers and lab data volumes (/root/mastodon-ops)...
+ Container web Stopping 
+ Container sidekiq Stopping 
+ Container streaming Stopping 
+ Container streaming Stopped 
+ Container streaming Removing 
+ Container streaming Removed 
+ Container web Stopped 
+ Container web Removing 
+ Container web Removed 
+ Container sidekiq Stopped 
+ Container sidekiq Removing 
+ Container sidekiq Removed 
+ Container redis Stopping 
+ Container pgbouncer Stopping 
+ Container redis Stopped 
+ Container redis Removing 
+ Container redis Removed 
+ Container pgbouncer Stopped 
+ Container pgbouncer Removing 
+ Container pgbouncer Removed 
+ Container db Stopping 
+ Container db Stopped 
+ Container db Removing 
+ Container db Removed 
+ Network mastodon_default Removing 
+ Network mastodon_default Removed 
+teardown verified: no kit containers remain.
+moved workspace to /root/mastodon-ops.prev-20260927-042422 (kept for comparison).
+reset done. Next: ./setup_stack.sh
+=================== PHASE same (final5): e2e 2026-09-27T04:25:21Z
+PASS install.sh  --   : /root/mastodon-ops/.bob/ (custom_modes.yaml, skills/credential-handover, settings.json hooks, mcp.json)
+  done-check     : check (Stop hook records a verdict; next prompt is told if a done was unverified)
+Check: KEYTURN_HOME=/root/.keyturn-e2e python3 /root/.keyturn-e2e/app/keyturn/selfcheck.py
+
+PASS mcp.json timeout is 300000 (ms)  -- 300000
+PASS hooks: PreToolUse gate, Stop done-check, UserPromptSubmit note  -- ['PreToolUse', 'Stop', 'UserPromptSubmit']
+PASS no secret in .bob
+PASS skill/modes never name the hidden file
+PASS selfcheck runs  -- ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify counts places)",
+  "reload or restart PgBouncer or the apps: READY"
+ ],
+ "observation_errors": []
+}
+
+KeyTurn under test: {'keyturn_version': '0.2.1', 'keyturn_digest': '3e7422489d937075'}
+PASS MCP server 0.2.1 with 12 tools incl. watch  -- ['sessions_by_user', 'consumer_config', 'login_test', 'customer_probe', 'gate_status', 'watch', 'fresh_connection', 'migration_path', 'delayed_job', 'inventory_verify', 'proofs', 'record']
+   mcp gate_status({}) 1.0s
+PASS gate_status has three parts + summary  -- ['retire the old role (new-user method): NOT READY - no delayed job is queued yet (delayed_job action=schedule), so proof 3 could not show one crossing the change; the transition watch is not running (watch action=start), so the change window would not be observed; no login role has the new password yet; sidekiq is still running with user mastodon; streaming is still running with user mastodon; we
+   mcp proofs({}) 14.3s
+PASS baseline: proofs do not pass
+PASS baseline Stop done-check: FAILED (fresh proofs failed), message quoted not interpreted  -- # KeyTurn done-check (2026-09-27T04:25:39.650518Z)
+
+**FAILED: the proofs ran on the current state and these checks failed**
+
+What is missing or failing:
+- proof 1 (customers on the new credential) not passed: a login role holds the new password, sidekiq runs on the new credential, streaming runs on 
+PASS done-log: result FAILED, verified false, no claimed_done field  -- {'at': '2026-09-27T04:25:39.650518Z', 'mode': 'stop-check', 'result': 'FAILED', 'verified': False, 'verdict': 'FAILED: the proofs ran on the current state and these checks failed', 'missing': ['proof 1 (customers on the new credential) not passed: a login role holds the new password, sidekiq runs on the new credential, streaming runs on the new credential, web runs on the new credential', 'proof 2
+PASS gate blocks editing .bob/mcp.json  -- Blocked by KeyTurn: .bob/ holds KeyTurn's own hooks, modes and tool settings. Agents may not change them during a handover; ask the operator if a setting looks wrong.
+
+PASS gate blocks sed on .bob/  -- Blocked by KeyTurn: .bob/ holds KeyTurn's own hooks, modes and tool settings. Agents may not change them during a handover; ask the operator if a setting looks wrong.
+
+PASS gate blocks reading KeyTurn's private folder  -- Blocked by KeyTurn: that path holds KeyTurn's private checker data (passwords, answer key). Use the KeyTurn MCP tools instead.
+
+PASS gate allows unrelated command
+PASS gate allows inserting a new user's userlist line (v0.1 false positive fixed)
+PASS gate blocks ALTER ... PASSWORD before the files point at the new password  -- Blocked by the KeyTurn gate: this step changes the old user's password in place, and it is not safe yet:
+  - no delayed job is queued yet (delayed_job action=schedule), so proof 3 could not show one crossing the change
+  - the transition watch is not running (watch action=start), so the change window would not be observed
+  - .env.production does not yet set mastodon with the new password
+  - pgbo
+PASS gate blocks the userlist hash edit until a delayed job and the watch are running  -- Blocked by the KeyTurn gate: this step changes the old user's password hash in userlist.txt, and it is not safe yet:
+  - no delayed job is queued yet (delayed_job action=schedule), so proof 3 could not show one crossing the change
+  - the transition watch is not running (watch action=start), so the change window would not be observed
+Two correct ways to rotate: (a) SAME USER: first point every cop
+   mcp migration_path({}) 5.9s
+PASS files-only state: the deploy's migration step fails (as in P2a)  -- rc=1 up-migrations=0 password authentication failed for user 
+   mcp proofs({}) 13.3s
+PASS files-only state: proofs 1 and 2 fail  -- ['Proof 1 customers on the new credential: FAIL', '   [!!] a login role holds the new password -- role: none (method: unknown)', '   [!!] sidekiq runs on the new credential -- status=running user=mastodon password=old', '   [!!] streaming runs on the new credential -- status=running user=mastodon password=old', '   [!!] web runs on the new credential -- status=running user=mastodon password=old', 
+PASS files-only state + 'Done' message: Stop done-check FAILED  -- # KeyTurn done-check (2026-09-27T04:26:01.912320Z)
+
+**FAILED: the proofs ran on the current state and these checks failed**
+
+What is missing or failing:
+- proof 1 (customers on the new credential) not passed: a login role holds the new password, sidekiq runs on the new credential, streaming runs on the new credential, web runs on the new credential
+- proof 2 (old credential refused, no old session
+PASS files-only state: next prompt is told the check FAILED  -- [KeyTurn done-check 2026-09-27T04:26:01.912320Z] FAILED: the proofs ran on the current state and these checks failed. Missing: proof 1 (customers on the new credential) not passed: a login role holds 
+PASS files changed after failing proofs: UNVERIFIED (stale), not FAILED  -- # KeyTurn done-check (2026-09-27T04:26:02.557313Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again)
+- proof 1 (customers on the new credenti
+PASS gate blocks recreating apps onto a password Postgres refuses  -- Blocked by the KeyTurn gate: this step restarts or recreates services, and it is not safe yet:
+  - Postgres refuses the user/password in .env.production, so the apps would fail after the restart
+  - Postgres refuses the user/password in pgbouncer.ini, so PgBouncer's new server connections would fail
+Reloading or restarting now would leave services on credentials that do not work yet (Postgres does
+PASS gate blocks PgBouncer RELOAD onto a password Postgres refuses  -- Blocked by the KeyTurn gate: this step reloads or reconnects PgBouncer, and it is not safe yet:
+  - Postgres refuses the user/password in .env.production, so the apps would fail after the restart
+  - Postgres refuses the user/password in pgbouncer.ini, so PgBouncer's new server connections would fail
+Reloading or restarting now would leave services on credentials that do not work yet (Postgres doe
+PASS gate blocks a bare 'docker compose restart' onto a refused password  -- Blocked by the KeyTurn gate: this step restarts every service, and it is not safe yet:
+  - Postgres refuses the user/password in .env.production, so the apps would fail after the restart
+  - Postgres refuses the user/password in pgbouncer.ini, so PgBouncer's new server connections would fail
+Reloading or restarting now would leave services on credentials that do not work yet (Postgres does not acc
+PASS gate blocks stopping an app while its next start would use a refused password  -- Blocked by the KeyTurn gate: this step stops or removes services (their next start uses the credentials in the files), and it is not safe yet:
+  - Postgres refuses the user/password in .env.production, so the apps would fail after the restart
+  - Postgres refuses the user/password in pgbouncer.ini, so PgBouncer's new server connections would fail
+Reloading or restarting now would leave services on
+PASS gate fails closed: RELOAD blocked when pgbouncer.ini has no database entry  -- Blocked by the KeyTurn gate: this step reloads or reconnects PgBouncer, and it is not safe yet:
+  - Postgres refuses the user/password in .env.production, so the apps would fail after the restart
+  - could not test PgBouncer's backend login in pgbouncer.ini (no user/password for the database), so KeyTurn will not allow a reload blind
+  - pgbouncer.ini has no entry for the database, so PgBouncer co
+PASS gate fails closed: RELOAD blocked when the pgbouncer.ini entry has no backend user/password  -- Blocked by the KeyTurn gate: this step reloads or reconnects PgBouncer, and it is not safe yet:
+  - Postgres refuses the user/password in .env.production, so the apps would fail after the restart
+  - could not test PgBouncer's backend login in pgbouncer.ini (no user/password for the database), so KeyTurn will not allow a reload blind
+Reloading or restarting now would leave services on credentials 
+   mcp fresh_connection({'kind': 'recreate_apps'}) 1.1s
+PASS fresh_connection refuses to recreate apps onto a refused credential  -- {'kind': 'recreate_apps', 'status': 'REFUSED', 'blockers': ['Postgres refuses the user/password in .env.production, so the apps would fail after the restart', "Postgres refuses the user/password in pgbouncer.ini, so PgBouncer's new server connections would fail"], 'detail': 'not run: services would restart with a credential Postgres refuses'}
+PASS gate still blocks ALTER without delayed job and watch (2 blockers)  -- Blocked by the KeyTurn gate: this step changes the old user's password in place, and it is not safe yet:
+  - no delayed job is queued yet (delayed_job action=schedule), so proof 3 could not show one crossing the change
+  - the transition watch is not running (watch action=start), so the change window would not be observed
+Two correct ways to rotate: (a) SAME USER: first point every copy of the pas
+   mcp delayed_job({'action': 'schedule'}) 0.3s
+PASS delayed job queued before the change  -- {'status': 'QUEUED', 'scheduled_id': '1', 'detail': "A customer's scheduled post is queued (due in 2 days). Check it after the handover with delayed_job action=check."}
+   mcp watch({'action': 'start'}) 2.6s
+PASS transition watch started  -- {'status': 'RUNNING', 'run_id': 'w20260927042611-785db4', 'first_sample_ok': True, 'detail': 'first sample passed; customer journeys and stored-password checks about every 5 s until watch action=stop (max 45 min)'}
+PASS gate allows ALTER once files, delayed job and watch are ready
+PASS ALTER ROLE mastodon PASSWORD (scripted operator)
+PASS gate allows RELOAD once Postgres accepts the files' credentials
+PASS pgbouncer RELOAD
+PASS gate allows recreating the apps
+PASS recreate apps
+   mcp customer_probe({'n': 1, 'gap_seconds': 0}) 1.8s
+   mcp customer_probe({'n': 3, 'gap_seconds': 2}) 8.6s
+PASS customers 3/3 after the in-place change  -- 3/3 customer journeys OK
+   mcp fresh_connection({'kind': 'recreate_apps'}) 28.7s
+PASS proof 3: recreate_apps ok  -- apps recreated from workspace files; journeys 3/3; running config matches files: True
+   mcp fresh_connection({'kind': 'reconnect'}) 13.8s
+PASS proof 3: reconnect ok  -- PgBouncer RECONNECT rc=0; journeys 3/3
+   mcp fresh_connection({'kind': 'restart_pgbouncer'}) 26.0s
+PASS proof 3: restart_pgbouncer ok  -- restart pgbouncer rc=0; journeys 3/3
+   mcp migration_path({}) 6.7s
+PASS proof 3: migration path ok  -- rc=0 up-migrations=615 
+   mcp delayed_job({'action': 'check'}) 41.5s
+   mcp delayed_job({'action': 'check'}) 41.0s
+   mcp delayed_job({'action': 'check'}) 41.0s
+   mcp delayed_job({'action': 'check'}) 26.0s
+PASS proof 3: delayed job queued before the change published after it  -- {'kind': 'delayed_job', 'ok': True, 'detail': 'queued before the handover, published at 2026-09-27 04:32:19.727663; old credential retired in between: True', 'at': '2026-09-27T04:32:20.205732Z', 'fingerprint': '1a8734aeb85baef0'}
+   mcp proofs({}) 14.2s
+Proof 1 customers on the new credential: PASS
+   [ok] a login role holds the new password -- role: mastodon (method: same user)
+   [ok] sidekiq runs on the new credential -- status=running user=mastodon password=new
+   [ok] streaming runs on the new credential -- status=running user=mastodon password=new
+   [ok] web runs on the new credential -- status=running user=mastodon password=new
+   [ok] customer journeys pass -- 3/3
+Proof 2 old credential refused, no old sessions: PASS
+   [ok] old credential refused at Postgres -- AUTH_REJECTED
+   [ok] old credential refused at PgBouncer -- CLIENT_AUTH_REJECTED
+   [ok] no session authenticated with the old credential is left -- postgres: old 0, unclear 0; pgbouncer_clients: old 0, unclear 0; pgbouncer_servers: old 0, unclear 0
+Proof 3 fresh connections, restarts, migration, delayed job: PASS
+   [ok] recreate_apps -- apps recreated from workspace files; journeys 3/3; running config matches files: True
+   [ok] reconnect -- PgBouncer RECONNECT rc=0; journeys 3/3
+   [ok] restart_pgbouncer -- restart pgbouncer rc=0; journeys 3/3
+   [ok] migration_path -- rc=0 up-migrations=615 
+   [ok] delayed_job -- queued before the handover, published at 2026-09-27 04:32:19.727663; old credential retired in between: True
+Transition watch (observed, not a proof): 76 journeys sampled; failed: 2 during the change, 3 during KeyTurn's own restart tests
+ALL THREE PROOFS: PASS
+PASS ALL THREE PROOFS PASS (same user method)  -- {'proof1_customers_on_new': True, 'proof2_old_refused': True, 'proof3_exercised': True, 'method': 'same user'}
+PASS proofs report the transition watch separately  -- {'samples': 76, 'ok': 71, 'failed': 5, 'failed_during_change': 2, 'failed_during_keyturn_tests': 3, 'from': '2026-09-27T04:26:13.235588Z', 'to': '2026-09-27T04:32:29.771898Z', 'longest_gap_s': 8.0, 'run_id': 'w20260927042611-785db4', 'first_sample_ok': True, 'stopped_at': None, 'failed_at': ['2026-09-27T04:26:33.601549Z', '2026-09-27T04:26:38.726040Z'], 'failed_during_keyturn_tests_at': ['2026-09-
+PASS watch summary is scoped to one run that began with a passing sample  -- {'samples': 76, 'ok': 71, 'failed': 5, 'failed_during_change': 2, 'failed_during_keyturn_tests': 3, 'from': '2026-09-27T04:26:13.235588Z', 'to': '2026-09-27T04:32:29.771898Z', 'longest_gap_s': 8.0, 'run_id': 'w20260927042611-785db4', 'first_sample_ok': True, 'stopped_at': None, 'failed_at': ['2026-09-27T04:26:33.601549Z', '2026-09-27T04:26:38.726040Z'], 'failed_during_keyturn_tests_at': ['2026-09-
+PASS proofs carry the KeyTurn revision and the running-services snapshot  -- {'keyturn_version': '0.2.1', 'keyturn_digest': '3e7422489d937075'}
+PASS watch splits failures: during the change vs during KeyTurn's own restart tests  -- {'samples': 76, 'ok': 71, 'failed': 5, 'failed_during_change': 2, 'failed_during_keyturn_tests': 3, 'from': '2026-09-27T04:26:13.235588Z', 'to': '2026-09-27T04:32:29.771898Z', 'longest_gap_s': 8.0, 'run_id': 'w20260927042611-785db4', 'first_sample_ok': True, 'stopped_at': None, 'failed_at': ['2026-09-27T04:26:33.601549Z', '2026-09-27T04:26:38.726040Z'], 'failed_during_keyturn_tests_at': ['2026-09-
+PASS KeyTurn logs the time window of each of its own restart tests  -- [{'kind': 'recreate_apps', 'start': '2026-09-27T04:26:09.058346Z', 'end': '2026-09-27T04:26:10.151111Z', 'status': 'REFUSED'}, {'kind': 'recreate_apps', 'start': '2026-09-27T04:27:05.629302Z', 'end': '2026-09-27T04:27:34.308230Z', 'status': 'ok'}, {'kind': 'reconnect', 'start': '2026-09-27T04:27:34.308858Z', 'end': '2026-09-27T04:27:48.107523Z', 'status': 'ok'}, {'kind': 'restart_pgbouncer', 'star
+PASS Stop done-check: VERIFIED even when the message says 'Not done' (no keyword inference)  -- # KeyTurn done-check (2026-09-27T04:32:35.247396Z)
+
+**VERIFIED: all three proofs pass on the current state**
+
+The agent's final message began (quoted, not interpreted):
+
+> Not done; the live rotation is still pending.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.0
+PASS UserPromptSubmit adds nothing after a VERIFIED check
+PASS optional finish gate allows when verified
+   mcp record({'operator': 'scripted operator (E2E, not Bob)'}) 1.3s
+PASS record written with observed_during_change  -- {'samples': 77, 'ok': 72, 'failed': 5, 'failed_during_change': 2, 'failed_during_keyturn_tests': 3, 'from': '2026-09-27T04:26:13.235588Z', 'to': '2026-09-27T04:32:34.967752Z', 'longest_gap_s': 8.0, 'run_id': 'w20260927042611-785db4', 'first_sample_ok': True, 'stopped_at': None, 'failed_at': ['2026-09-27T04:26:33.601549Z', '2026-09-27T04:26:38.726040Z'], 'failed_during_keyturn_tests_at': ['2026-09-
+PASS record has no secrets
+PASS record states the current verdict, operator, revision, no-inventory note and known limits  -- {'verdict_now': 'VERIFIED', 'operator': 'scripted operator (E2E, not Bob)', 'inventory_source': 'no inventory was supplied in this run (keyturn/inventory.json is absent)', 'coverage_gaps_note': 'not stated (no gaps field in the inventory)'}
+PASS Stop done-check: UNVERIFIED when the files changed after the proofs (stale)  -- # KeyTurn done-check (2026-09-27T04:32:37.664996Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again)
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IB
+PASS UserPromptSubmit reminds Bob of the UNVERIFIED check  -- [KeyTurn done-check 2026-09-27T04:32:37.664996Z] UNVERIFIED: KeyTurn cannot confirm the handover on the current state. Missing: the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again). The handover is not verified until the KeyTurn proofs tool says ALL
+PASS Stop done-check: VERIFIED again once the state matches the proofs  -- # KeyTurn done-check (2026-09-27T04:32:38.256014Z)
+
+**VERIFIED: all three proofs pass on the current state**
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's
+PASS Stop done-check: UNVERIFIED after an app is stopped, without rerunning the proofs  -- # KeyTurn done-check (2026-09-27T04:32:39.846942Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- services changed after the proofs ran: sidekiq is exited now (was running) (run proofs again)
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.
+PASS Stop done-check: still UNVERIFIED after the app is started again (it was restarted)  -- # KeyTurn done-check (2026-09-27T04:32:43.732335Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- services changed after the proofs ran: sidekiq was restarted (run proofs again)
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.0 a Stop hook 
+   mcp proofs({}) 20.8s
+PASS fresh proofs after the restart: VERIFIED again  -- # KeyTurn done-check (2026-09-27T04:33:05.062927Z)
+
+**VERIFIED: all three proofs pass on the current state**
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's
+PASS change bracket known on both sides  -- ['2026-09-27 04:26:27.539104', '2026-09-27 04:26:28.085078']
+   mcp proofs({}) 11.6s
+PASS pgbouncer down: proofs report observation errors, not a pass  -- ['pgbouncer clients: psql: error: could not translate host name "pgbouncer" to address: Name does not resolve', 'pgbouncer servers: psql: error: could not translate host name "pgbouncer" to address: Name does not resolve', 'pgbouncer clients: psql: error: could not translate host name "pgbouncer" to address: Name does not resolve', 'pgbouncer servers: psql: error: could not translate host name "pg
+PASS pgbouncer down: Stop done-check UNVERIFIED with observation errors  -- # KeyTurn done-check (2026-09-27T04:33:27.343468Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- services changed after the proofs ran: pgbouncer is not running (exited) (run proofs again)
+- the proofs run had observation errors: pgbouncer clients: psql: error: could not translate host name "pgbouncer" to address: Name does not resolve; pg
+   mcp watch({'action': 'stop'}) 1.0s
+PASS watch stopped  -- STOPPED
+PASS state logs written  -- ['delayed.json', 'done-log.jsonl', 'gate-log.jsonl', 'keyturn-tests.jsonl', 'mcp-calls.jsonl', 'proofs-history.jsonl', 'proofs.json', 'stress.jsonl', 'verifier-seen.json', 'watch-run.json', 'watch.err', 'watch.jsonl', 'watch.stop']
+PASS no secrets in state logs
+
+E2E v0.2 phase same: 69/69 checks passed
+EXIT_same=0
+=================== PHASE new (final5): reset + setup 2026-09-27T04:33:33Z
+Stopping and removing this kit's containers and lab data volumes (/root/mastodon-ops)...
+ Container web Stopping 
+ Container sidekiq Stopping 
+ Container streaming Stopping 
+ Container streaming Stopped 
+ Container streaming Removing 
+ Container streaming Removed 
+ Container web Stopped 
+ Container web Removing 
+ Container web Removed 
+ Container sidekiq Stopped 
+ Container sidekiq Removing 
+ Container sidekiq Removed 
+ Container redis Stopping 
+ Container pgbouncer Stopping 
+ Container redis Stopped 
+ Container redis Removing 
+ Container redis Removed 
+ Container pgbouncer Stopped 
+ Container pgbouncer Removing 
+ Container pgbouncer Removed 
+ Container db Stopping 
+ Container db Stopped 
+ Container db Removing 
+ Container db Removed 
+ Network mastodon_default Removing 
+ Network mastodon_default Removed 
+teardown verified: no kit containers remain.
+moved workspace to /root/mastodon-ops.prev-20260927-043335 (kept for comparison).
+reset done. Next: ./setup_stack.sh
+=================== PHASE new (final5): e2e 2026-09-27T04:34:31Z
+PASS install.sh  --   : /root/mastodon-ops/.bob/ (custom_modes.yaml, skills/credential-handover, settings.json hooks, mcp.json)
+  done-check     : check (Stop hook records a verdict; next prompt is told if a done was unverified)
+Check: KEYTURN_HOME=/root/.keyturn-e2e python3 /root/.keyturn-e2e/app/keyturn/selfcheck.py
+
+PASS mcp.json timeout is 300000 (ms)  -- 300000
+PASS hooks: PreToolUse gate, Stop done-check, UserPromptSubmit note  -- ['PreToolUse', 'Stop', 'UserPromptSubmit']
+PASS no secret in .bob
+PASS skill/modes never name the hidden file
+PASS selfcheck runs  -- ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify counts places)",
+  "reload or restart PgBouncer or the apps: READY"
+ ],
+ "observation_errors": []
+}
+
+KeyTurn under test: {'keyturn_version': '0.2.1', 'keyturn_digest': '3e7422489d937075'}
+PASS MCP server 0.2.1 with 12 tools incl. watch  -- ['sessions_by_user', 'consumer_config', 'login_test', 'customer_probe', 'gate_status', 'watch', 'fresh_connection', 'migration_path', 'delayed_job', 'inventory_verify', 'proofs', 'record']
+   mcp delayed_job({'action': 'schedule'}) 0.3s
+PASS delayed job queued before the change  -- {'status': 'QUEUED', 'scheduled_id': '1', 'detail': "A customer's scheduled post is queued (due in 2 days). Check it after the handover with delayed_job action=check."}
+   mcp watch({'action': 'start'}) 2.9s
+PASS transition watch started  -- {'status': 'RUNNING', 'run_id': 'w20260927043434-ef9f6c', 'first_sample_ok': True, 'detail': 'first sample passed; customer journeys and stored-password checks about every 5 s until watch action=stop (max 45 min)'}
+   mcp watch({'action': 'stop'}) 1.0s
+   mcp watch({'action': 'start'}) 2.7s
+PASS restarting the watch starts a new run with its own passing first sample  -- {'status': 'RUNNING', 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'detail': 'first sample passed; customer journeys and stored-password checks about every 5 s until watch action=stop (max 45 min)'}
+PASS gate allows creating the new role (not covered)
+PASS create role mastodon_v2
+PASS gate blocks recreating apps while userlist.txt has no entry for the new user  -- Blocked by the KeyTurn gate: this step restarts or recreates services, and it is not safe yet:
+  - PgBouncer would refuse the apps' sign-in as mastodon_v2 with the password .env.production uses after the restart (another copy of the credential in the deployment files is missing or different; KeyTurn does not name it)
+Reloading or restarting now would leave services on credentials that do not work 
+PASS gate blocks copying a userlist without the old user over the real one while it is in use  -- Blocked by the KeyTurn gate: this step removes the old user's entry from userlist.txt, and it is not safe yet:
+  - sidekiq is still running with user mastodon
+  - streaming is still running with user mastodon
+  - web is still running with user mastodon
+  - pgbouncer.ini still connects to Postgres as mastodon
+  - 3 live Postgres session(s) still use mastodon (pgbouncer x3)
+  - 7 PgBouncer client(s)
+PASS gate blocks retiring the old role while it is in use  -- Blocked by the KeyTurn gate: this step disables login for the old user, and it is not safe yet:
+  - sidekiq is still running with user mastodon
+  - streaming is still running with user mastodon
+  - web is still running with user mastodon
+  - pgbouncer.ini still connects to Postgres as mastodon
+  - 3 live Postgres session(s) still use mastodon (pgbouncer x3)
+  - 7 PgBouncer client(s) still use mast
+PASS gate allows RELOAD once every file credential works
+PASS pgbouncer RELOAD
+PASS pgbouncer RECONNECT
+PASS gate allows recreating the apps
+PASS recreate apps on the new user
+   mcp customer_probe({'n': 1, 'gap_seconds': 0}) 1.9s
+   mcp customer_probe({'n': 3, 'gap_seconds': 2}) 8.4s
+PASS customers 3/3 on the new user (overlap)  -- 3/3 customer journeys OK
+   mcp gate_status({}) 1.1s
+PASS gate_status: retire READY once nothing uses the old user  -- ['retire the old role (new-user method): READY', "change the old role's password in place (same-user method): NOT READY - .env.production does not yet set mastodon with the new password; pgbouncer.ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify cou
+PASS gate_status: in-place change NOT READY in the new-user method  -- ['retire the old role (new-user method): READY', "change the old role's password in place (same-user method): NOT READY - .env.production does not yet set mastodon with the new password; pgbouncer.ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify cou
+PASS gate allows retiring the old role
+PASS retire: NOLOGIN
+PASS gate allows removing the old userlist entry
+PASS gate allows the final RELOAD
+PASS pgbouncer RELOAD after retire
+   mcp fresh_connection({'kind': 'recreate_apps'}) 29.2s
+PASS proof 3: recreate_apps ok  -- apps recreated from workspace files; journeys 3/3; running config matches files: True
+   mcp fresh_connection({'kind': 'reconnect'}) 13.3s
+PASS proof 3: reconnect ok  -- PgBouncer RECONNECT rc=0; journeys 3/3
+   mcp fresh_connection({'kind': 'restart_pgbouncer'}) 25.9s
+PASS proof 3: restart_pgbouncer ok  -- restart pgbouncer rc=0; journeys 3/3
+   mcp migration_path({}) 6.2s
+PASS proof 3: migration path ok  -- rc=0 up-migrations=615 
+   mcp delayed_job({'action': 'check'}) 41.0s
+   mcp delayed_job({'action': 'check'}) 40.9s
+   mcp delayed_job({'action': 'check'}) 41.0s
+   mcp delayed_job({'action': 'check'}) 31.1s
+PASS proof 3: delayed job queued before the change published after it  -- {'kind': 'delayed_job', 'ok': True, 'detail': 'queued before the handover, published at 2026-09-27 04:40:32.507979; old credential retired in between: True', 'at': '2026-09-27T04:40:37.167439Z', 'fingerprint': '58ee65e0c4884ba4'}
+   mcp proofs({}) 14.6s
+Proof 1 customers on the new credential: PASS
+   [ok] a login role holds the new password -- role: mastodon_v2 (method: new user)
+   [ok] sidekiq runs on the new credential -- status=running user=mastodon_v2 password=new
+   [ok] streaming runs on the new credential -- status=running user=mastodon_v2 password=new
+   [ok] web runs on the new credential -- status=running user=mastodon_v2 password=new
+   [ok] customer journeys pass -- 3/3
+Proof 2 old credential refused, no old sessions: PASS
+   [ok] old credential refused at Postgres -- LOGIN_DISABLED
+   [ok] old credential refused at PgBouncer -- CLIENT_AUTH_REJECTED
+   [ok] no session authenticated with the old credential is left -- postgres: old 0, unclear 0; pgbouncer_clients: old 0, unclear 0; pgbouncer_servers: old 0, unclear 0
+Proof 3 fresh connections, restarts, migration, delayed job: PASS
+   [ok] recreate_apps -- apps recreated from workspace files; journeys 3/3; running config matches files: True
+   [ok] reconnect -- PgBouncer RECONNECT rc=0; journeys 3/3
+   [ok] restart_pgbouncer -- restart pgbouncer rc=0; journeys 3/3
+   [ok] migration_path -- rc=0 up-migrations=615 
+   [ok] delayed_job -- queued before the handover, published at 2026-09-27 04:40:32.507979; old credential retired in between: True
+Transition watch (observed, not a proof): 73 journeys sampled; failed: 2 during the change, 0 during KeyTurn's own restart tests
+ALL THREE PROOFS: PASS
+PASS ALL THREE PROOFS PASS (new user method)  -- {'proof1_customers_on_new': True, 'proof2_old_refused': True, 'proof3_exercised': True, 'method': 'new user'}
+PASS proofs report the transition watch separately  -- {'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',
+PASS watch summary is scoped to one run that began with a passing sample  -- {'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',
+PASS proofs carry the KeyTurn revision and the running-services snapshot  -- {'keyturn_version': '0.2.1', 'keyturn_digest': '3e7422489d937075'}
+PASS watch splits failures: during the change vs during KeyTurn's own restart tests  -- {'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',
+PASS KeyTurn logs the time window of each of its own restart tests  -- [{'kind': 'recreate_apps', 'start': '2026-09-27T04:35:18.847849Z', 'end': '2026-09-27T04:35:48.080394Z', 'status': 'ok'}, {'kind': 'reconnect', 'start': '2026-09-27T04:35:48.081134Z', 'end': '2026-09-27T04:36:01.426593Z', 'status': 'ok'}, {'kind': 'restart_pgbouncer', 'start': '2026-09-27T04:36:01.427395Z', 'end': '2026-09-27T04:36:27.300872Z', 'status': 'ok'}]
+PASS Stop done-check: VERIFIED even when the message says 'Not done' (no keyword inference)  -- # KeyTurn done-check (2026-09-27T04:40:52.514313Z)
+
+**VERIFIED: all three proofs pass on the current state**
+
+The agent's final message began (quoted, not interpreted):
+
+> Not done; the live rotation is still pending.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.0
+PASS UserPromptSubmit adds nothing after a VERIFIED check
+PASS optional finish gate allows when verified
+   mcp record({'operator': 'scripted operator (E2E, not Bob)'}) 1.3s
+PASS record written with observed_during_change  -- {'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',
+PASS record has no secrets
+PASS record states the current verdict, operator, revision, no-inventory note and known limits  -- {'verdict_now': 'VERIFIED', 'operator': 'scripted operator (E2E, not Bob)', 'inventory_source': 'no inventory was supplied in this run (keyturn/inventory.json is absent)', 'coverage_gaps_note': 'not stated (no gaps field in the inventory)'}
+PASS Stop done-check: UNVERIFIED when the files changed after the proofs (stale)  -- # KeyTurn done-check (2026-09-27T04:40:54.921166Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again)
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IB
+PASS UserPromptSubmit reminds Bob of the UNVERIFIED check  -- [KeyTurn done-check 2026-09-27T04:40:54.921166Z] UNVERIFIED: KeyTurn cannot confirm the handover on the current state. Missing: the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again). The handover is not verified until the KeyTurn proofs tool says ALL
+PASS Stop done-check: VERIFIED again once the state matches the proofs  -- # KeyTurn done-check (2026-09-27T04:40:55.632730Z)
+
+**VERIFIED: all three proofs pass on the current state**
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's
+PASS Stop done-check: UNVERIFIED after an app is stopped, without rerunning the proofs  -- # KeyTurn done-check (2026-09-27T04:40:57.116155Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- services changed after the proofs ran: sidekiq is exited now (was running) (run proofs again)
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.
+PASS Stop done-check: still UNVERIFIED after the app is started again (it was restarted)  -- # KeyTurn done-check (2026-09-27T04:41:01.048198Z)
+
+**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**
+
+What is missing or failing:
+- services changed after the proofs ran: sidekiq was restarted (run proofs again)
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.0 a Stop hook 
+   mcp proofs({}) 19.5s
+PASS fresh proofs after the restart: VERIFIED again  -- # KeyTurn done-check (2026-09-27T04:41:21.063102Z)
+
+**VERIFIED: all three proofs pass on the current state**
+
+The agent's final message began (quoted, not interpreted):
+
+> Done.
+
+Recorded by KeyTurn's
+PASS the summary covers only the current watch run and lists the earlier one separately  -- {'samples': 77, 'ok': 75, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:41:20.284386Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}, {'from': '2026-09-27T04:40:51Z', 'seconds': 17}], '
+   mcp watch({'action': 'stop'}) 1.0s
+PASS watch stopped  -- STOPPED
+PASS state logs written  -- ['delayed.json', 'done-log.jsonl', 'gate-log.jsonl', 'keyturn-tests.jsonl', 'mcp-calls.jsonl', 'proofs-history.jsonl', 'proofs.json', 'stress.jsonl', 'verifier-seen.json', 'watch-run.json', 'watch.err', 'watch.jsonl', 'watch.pid', 'watch.stop']
+PASS no secrets in state logs
+
+E2E v0.2 phase new: 55/55 checks passed
+EXIT_new=0
+ALL DONE 2026-09-27T04:41:22Z

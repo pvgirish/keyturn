@@ -1,0 +1,14 @@
+[IBM Bob 2.2.0, plain Agent mode, P2a run 3. Final message as pasted by Girish at about 21:50 IST.]
+
+All three files have been updated. Here's a summary of every change made:
+
+| File | What changed |
+|---|---|
+| [`.env.production`](.env.production:16) | `DB_PASS` updated to `new-Pa55-2026` |
+| [`pgbouncer/pgbouncer.ini`](pgbouncer/pgbouncer.ini:2) | `password=` in the connection string updated to `new-Pa55-2026` |
+| [`pgbouncer/userlist.txt`](pgbouncer/userlist.txt:1) | `mastodon` user hash updated to `md5(new-Pa55-2026 + mastodon)` |
+
+**Next steps to apply the rotation at runtime:**
+1. Run `ALTER USER mastodon PASSWORD 'new-Pa55-2026';` against the Postgres `db` container to update the actual database credential.
+2. Reload PgBouncer (`RELOAD;` via the admin console, or `docker compose restart pgbouncer`) to pick up the new `pgbouncer.ini` and `userlist.txt`.
+3. Restart `web`, `sidekiq`, and `streaming` (or do a rolling restart) so they re-read the updated `.env.production`.

@@ -1,0 +1,7 @@
+phase0 captured at 2026-09-27T06:13:22.665657Z (host UTC)
+  role mastodon     login=Y old_pw=True new_pw=False
+  login old-direct         ACCEPTED
+  login old-via-pgbouncer  ACCEPTED
+  apps: web(user=mastodon, pass=old, status=running), sidekiq(user=mastodon, pass=old, status=running), streaming(user=mastodon, pass=old, status=running)
+  customer journeys (baseline-state): 3/3 OK
+  files changed: (none)

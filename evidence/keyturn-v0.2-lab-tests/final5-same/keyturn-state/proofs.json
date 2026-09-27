@@ -1,0 +1,159 @@
+{
+ "proof1_customers_on_new": {
+  "pass": false,
+  "checks": [
+   [
+    "a login role holds the new password",
+    true,
+    "role: mastodon (method: same user)"
+   ],
+   [
+    "sidekiq runs on the new credential",
+    true,
+    "status=running user=mastodon password=new"
+   ],
+   [
+    "streaming runs on the new credential",
+    true,
+    "status=running user=mastodon password=new"
+   ],
+   [
+    "web runs on the new credential",
+    true,
+    "status=running user=mastodon password=new"
+   ],
+   [
+    "customer journeys pass",
+    false,
+    "0/3"
+   ]
+  ]
+ },
+ "proof2_old_refused": {
+  "pass": false,
+  "checks": [
+   [
+    "old credential refused at Postgres",
+    true,
+    "AUTH_REJECTED"
+   ],
+   [
+    "old credential refused at PgBouncer",
+    false,
+    "TRANSPORT_ERROR"
+   ],
+   [
+    "no session authenticated with the old credential is left",
+    true,
+    "postgres: old 0, unclear 0; pgbouncer_clients: old 0, unclear 0; pgbouncer_servers: old 0, unclear 0"
+   ]
+  ]
+ },
+ "proof3_exercised": {
+  "pass": true,
+  "checks": [
+   [
+    "recreate_apps",
+    true,
+    "apps recreated from workspace files; journeys 3/3; running config matches files: True"
+   ],
+   [
+    "reconnect",
+    true,
+    "PgBouncer RECONNECT rc=0; journeys 3/3"
+   ],
+   [
+    "restart_pgbouncer",
+    true,
+    "restart pgbouncer rc=0; journeys 3/3"
+   ],
+   [
+    "migration_path",
+    true,
+    "rc=0 up-migrations=615 "
+   ],
+   [
+    "delayed_job",
+    true,
+    "queued before the handover, published at 2026-09-27 04:32:19.727663; old credential retired in between: True"
+   ]
+  ]
+ },
+ "observation_errors": [
+  "pgbouncer clients: psql: error: could not translate host name \"pgbouncer\" to address: Name does not resolve",
+  "pgbouncer servers: psql: error: could not translate host name \"pgbouncer\" to address: Name does not resolve",
+  "pgbouncer clients: psql: error: could not translate host name \"pgbouncer\" to address: Name does not resolve",
+  "pgbouncer servers: psql: error: could not translate host name \"pgbouncer\" to address: Name does not resolve",
+  "services changed while the proofs ran: pgbouncer is not running (exited)"
+ ],
+ "method": "same user",
+ "all_pass": false,
+ "at": "2026-09-27T04:33:26.822791Z",
+ "fingerprint": "1a8734aeb85baef0",
+ "old_user": "mastodon",
+ "new_user": "mastodon",
+ "change_bracket": [
+  "2026-09-27 04:26:27.539104",
+  "2026-09-27 04:26:28.085078"
+ ],
+ "transition": {
+  "samples": 85,
+  "ok": 78,
+  "failed": 7,
+  "failed_during_change": 4,
+  "failed_during_keyturn_tests": 3,
+  "from": "2026-09-27T04:26:13.235588Z",
+  "to": "2026-09-27T04:33:23.327135Z",
+  "longest_gap_s": 18.0,
+  "run_id": "w20260927042611-785db4",
+  "first_sample_ok": true,
+  "stopped_at": null,
+  "unobserved_gaps": [
+   {
+    "from": "2026-09-27T04:32:34Z",
+    "seconds": 18
+   }
+  ],
+  "failed_at": [
+   "2026-09-27T04:26:33.601549Z",
+   "2026-09-27T04:26:38.726040Z",
+   "2026-09-27T04:33:18.330234Z",
+   "2026-09-27T04:33:23.327135Z"
+  ],
+  "failed_during_keyturn_tests_at": [
+   "2026-09-27T04:27:09.765166Z",
+   "2026-09-27T04:27:13.622668Z",
+   "2026-09-27T04:28:01.055112Z"
+  ],
+  "note": "customer journeys sampled about every 5 s while the watch ran; gaps between samples are not observed, so this is evidence, not a zero-downtime guarantee. Failures inside KeyTurn's own restart tests (proof 3 deliberately restarts things) are counted separately."
+ },
+ "runtime_state": {
+  "web": {
+   "status": "running",
+   "id": "a152a8f79318",
+   "started_at": "2026-09-27T04:27:08.395052842Z"
+  },
+  "sidekiq": {
+   "status": "running",
+   "id": "36528f8f6df9",
+   "started_at": "2026-09-27T04:32:39.894396387Z"
+  },
+  "streaming": {
+   "status": "running",
+   "id": "0be8779aafd7",
+   "started_at": "2026-09-27T04:33:15.397877719Z"
+  },
+  "pgbouncer": {
+   "status": "exited",
+   "id": "98fbe7d53824",
+   "started_at": "2026-09-27T04:27:59.641876155Z"
+  },
+  "db": {
+   "status": "running",
+   "id": "ebea031b5af6",
+   "started_at": "2026-09-27T04:24:33.934062867Z"
+  }
+ },
+ "keyturn_version": "0.2.1",
+ "keyturn_digest": "3e7422489d937075"
+}

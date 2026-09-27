@@ -1,0 +1,4 @@
+{"at": "2026-09-27T06:13:48.059382Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-27T06:13:48.130376Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-27T06:13:48.805255Z", "tool": "gate_status", "args": {}, "seconds": 0.7, "error": false}
+{"at": "2026-09-27T06:14:00.070791Z", "tool": "proofs", "args": {}, "seconds": 11.3, "error": false}

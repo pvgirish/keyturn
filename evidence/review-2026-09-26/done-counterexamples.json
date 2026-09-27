@@ -1,0 +1,42 @@
+{
+  "scope": "Isolated synthetic counterexamples against actual v0.1 hook; no live verdict or outage inference",
+  "source": "app/keyturn/keyturn/hook_done.py",
+  "source_sha256": "7eb7ba5f426d54b85bbb7e5a9ef41e266368189a1d1080bced519ac99d2489aa",
+  "results": [
+    {
+      "case": "valid_control",
+      "expected_verified": true,
+      "actual_verified": true,
+      "matches_expected": true,
+      "reasons": []
+    },
+    {
+      "case": "observation_error",
+      "expected_verified": false,
+      "actual_verified": true,
+      "matches_expected": false,
+      "reasons": []
+    },
+    {
+      "case": "aggregate_false",
+      "expected_verified": false,
+      "actual_verified": true,
+      "matches_expected": false,
+      "reasons": []
+    },
+    {
+      "case": "completion_language",
+      "message": "Not done; the live rotation is still pending.",
+      "expected_claimed_done": false,
+      "actual_claimed_done": true,
+      "matches_expected": false
+    },
+    {
+      "case": "completion_language",
+      "message": "Rotation completed successfully.",
+      "expected_claimed_done": true,
+      "actual_claimed_done": true,
+      "matches_expected": true
+    }
+  ]
+}

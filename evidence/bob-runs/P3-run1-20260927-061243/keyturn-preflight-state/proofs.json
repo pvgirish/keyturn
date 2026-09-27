@@ -1,0 +1,126 @@
+{
+ "proof1_customers_on_new": {
+  "pass": false,
+  "checks": [
+   [
+    "a login role holds the new password",
+    false,
+    "role: none (method: unknown)"
+   ],
+   [
+    "sidekiq runs on the new credential",
+    false,
+    "status=running user=mastodon password=old"
+   ],
+   [
+    "streaming runs on the new credential",
+    false,
+    "status=running user=mastodon password=old"
+   ],
+   [
+    "web runs on the new credential",
+    false,
+    "status=running user=mastodon password=old"
+   ],
+   [
+    "customer journeys pass",
+    true,
+    "3/3"
+   ]
+  ]
+ },
+ "proof2_old_refused": {
+  "pass": false,
+  "checks": [
+   [
+    "old credential refused at Postgres",
+    false,
+    "ACCEPTED"
+   ],
+   [
+    "old credential refused at PgBouncer",
+    false,
+    "ACCEPTED"
+   ],
+   [
+    "no session authenticated with the old credential is left",
+    false,
+    "postgres: old pgbouncer x3, unclear 0; pgbouncer_clients: old sidekiq x4, streaming x1, web x2, unclear 0; pgbouncer_servers: old db x3, unclear 0"
+   ]
+  ]
+ },
+ "proof3_exercised": {
+  "pass": false,
+  "checks": [
+   [
+    "recreate_apps",
+    false,
+    "not exercised yet"
+   ],
+   [
+    "reconnect",
+    false,
+    "not exercised yet"
+   ],
+   [
+    "restart_pgbouncer",
+    false,
+    "not exercised yet"
+   ],
+   [
+    "migration_path",
+    false,
+    "not exercised yet"
+   ],
+   [
+    "delayed_job",
+    false,
+    "not exercised yet"
+   ]
+  ]
+ },
+ "observation_errors": [],
+ "method": "unknown",
+ "all_pass": false,
+ "at": "2026-09-27T06:14:00.069754Z",
+ "fingerprint": "89a078d3da6b899c",
+ "old_user": "mastodon",
+ "new_user": null,
+ "change_bracket": [
+  null,
+  null
+ ],
+ "transition": {
+  "samples": 0,
+  "note": "the change window was not observed (no transition watch samples in this run)"
+ },
+ "runtime_state": {
+  "web": {
+   "status": "running",
+   "id": "057ee6450311",
+   "started_at": "2026-09-27T06:12:54.270018802Z"
+  },
+  "sidekiq": {
+   "status": "running",
+   "id": "0e5c9efc8560",
+   "started_at": "2026-09-27T06:12:54.271806177Z"
+  },
+  "streaming": {
+   "status": "running",
+   "id": "d37b68658d0c",
+   "started_at": "2026-09-27T06:12:54.270295844Z"
+  },
+  "pgbouncer": {
+   "status": "running",
+   "id": "0ca5e82e45e6",
+   "started_at": "2026-09-27T06:12:50.791530509Z"
+  },
+  "db": {
+   "status": "running",
+   "id": "bfdbc4f432d9",
+   "started_at": "2026-09-27T06:12:48.265215424Z"
+  }
+ },
+ "keyturn_version": "0.2.1",
+ "keyturn_digest": "3e7422489d937075"
+}

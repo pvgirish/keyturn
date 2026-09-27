@@ -1,0 +1,19 @@
+{"at": "2026-09-27T04:34:34.297425Z", "tool": "delayed_job", "args": {"action": "schedule"}, "seconds": 0.3, "error": false}
+{"at": "2026-09-27T04:34:37.181218Z", "tool": "watch", "args": {"action": "start"}, "seconds": 2.9, "error": false}
+{"at": "2026-09-27T04:34:38.185461Z", "tool": "watch", "args": {"action": "stop"}, "seconds": 1.0, "error": false}
+{"at": "2026-09-27T04:34:40.877028Z", "tool": "watch", "args": {"action": "start"}, "seconds": 2.7, "error": false}
+{"at": "2026-09-27T04:35:05.752356Z", "tool": "customer_probe", "args": {"n": 1, "gap_seconds": 0}, "seconds": 1.9, "error": false}
+{"at": "2026-09-27T04:35:14.107668Z", "tool": "customer_probe", "args": {"n": 3, "gap_seconds": 2}, "seconds": 8.4, "error": false}
+{"at": "2026-09-27T04:35:15.189477Z", "tool": "gate_status", "args": {}, "seconds": 1.1, "error": false}
+{"at": "2026-09-27T04:35:48.080512Z", "tool": "fresh_connection", "args": {"kind": "recreate_apps"}, "seconds": 29.2, "error": false}
+{"at": "2026-09-27T04:36:01.426818Z", "tool": "fresh_connection", "args": {"kind": "reconnect"}, "seconds": 13.3, "error": false}
+{"at": "2026-09-27T04:36:27.300963Z", "tool": "fresh_connection", "args": {"kind": "restart_pgbouncer"}, "seconds": 25.9, "error": false}
+{"at": "2026-09-27T04:36:33.494672Z", "tool": "migration_path", "args": {}, "seconds": 6.2, "error": false}
+{"at": "2026-09-27T04:37:14.454655Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 41.0, "error": false}
+{"at": "2026-09-27T04:38:25.377273Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 40.9, "error": false}
+{"at": "2026-09-27T04:39:36.339369Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 41.0, "error": false}
+{"at": "2026-09-27T04:40:37.406631Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 31.1, "error": false}
+{"at": "2026-09-27T04:40:52.007706Z", "tool": "proofs", "args": {}, "seconds": 14.6, "error": false}
+{"at": "2026-09-27T04:40:54.397829Z", "tool": "record", "args": {"operator": "scripted operator (E2E, not Bob)"}, "seconds": 1.3, "error": false}
+{"at": "2026-09-27T04:41:20.511014Z", "tool": "proofs", "args": {}, "seconds": 19.5, "error": false}
+{"at": "2026-09-27T04:41:22.074139Z", "tool": "watch", "args": {"action": "stop"}, "seconds": 1.0, "error": false}

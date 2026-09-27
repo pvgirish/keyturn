@@ -1,0 +1,4 @@
+{"kind": "recreate_apps", "start": "2026-09-27T04:26:09.058346Z", "end": "2026-09-27T04:26:10.151111Z", "status": "REFUSED"}
+{"kind": "recreate_apps", "start": "2026-09-27T04:27:05.629302Z", "end": "2026-09-27T04:27:34.308230Z", "status": "ok"}
+{"kind": "reconnect", "start": "2026-09-27T04:27:34.308858Z", "end": "2026-09-27T04:27:48.107523Z", "status": "ok"}
+{"kind": "restart_pgbouncer", "start": "2026-09-27T04:27:48.108177Z", "end": "2026-09-27T04:28:14.136590Z", "status": "ok"}

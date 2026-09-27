@@ -1,0 +1,61 @@
+name: mastodon
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: db
+    command: ["-c", "log_connections=on", "-c", "log_disconnections=on"]
+    environment:
+      POSTGRES_PASSWORD: super-Pa55-2026
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+
+  pgbouncer:
+    image: edoburu/pgbouncer:v1.25.2-p0
+    container_name: pgbouncer
+    volumes:
+      - ./pgbouncer:/etc/pgbouncer
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  web:
+    image: tootsuite/mastodon:v4.7.2
+    container_name: web
+    command: ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+    env_file: .env.production
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - db
+      - redis
+      - pgbouncer
+    restart: unless-stopped
+
+  sidekiq:
+    image: tootsuite/mastodon:v4.7.2
+    container_name: sidekiq
+    command: ["bundle", "exec", "sidekiq"]
+    env_file: .env.production
+    depends_on:
+      - db
+      - redis
+      - pgbouncer
+    restart: unless-stopped
+
+  streaming:
+    image: tootsuite/mastodon-streaming:v4.7.2
+    container_name: streaming
+    command: ["node", "./streaming/index.js"]
+    env_file: .env.production
+    ports:
+      - "127.0.0.1:4000:4000"
+    depends_on:
+      - db
+      - redis
+      - pgbouncer
+    restart: unless-stopped

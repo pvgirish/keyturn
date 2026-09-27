@@ -1,0 +1,4 @@
+{"step":"reconnect","rc":0,"host_utc":"2026-09-26T14:25:40Z","note":"RECONNECT"}
+{"step":"restart","rc":0,"host_utc":"2026-09-26T14:25:59Z","note":" Container streaming Restarting  Container web Restarting  Container sidekiq Restarting  Container streaming Started  Co"}
+{"step":"migrate_status","rc":1,"host_utc":"2026-09-26T14:26:22Z","note":"up=0"}
+{"step":"marker_made_due","rc":0,"host_utc":"2026-09-26T14:26:22Z","note":"see marker-result.json"}

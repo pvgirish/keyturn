@@ -1,0 +1,27 @@
+{
+ "mastodon": [
+  {
+   "key": "e20a7d94029c|True",
+   "fp": "e20a7d94029c",
+   "can_login": true,
+   "first_seen": "2026-09-27 04:34:32.318232+00",
+   "last_seen": "2026-09-27 04:35:15.666243+00"
+  },
+  {
+   "key": "e20a7d94029c|False",
+   "fp": "e20a7d94029c",
+   "can_login": false,
+   "first_seen": "2026-09-27 04:35:16.870001+00",
+   "last_seen": "2026-09-27 04:41:19.540845+00"
+  }
+ ],
+ "mastodon_v2": [
+  {
+   "key": "e218afd4cac5|True",
+   "fp": "e218afd4cac5",
+   "can_login": true,
+   "first_seen": "2026-09-27 04:34:41.498635+00",
+   "last_seen": "2026-09-27 04:41:19.540845+00"
+  }
+ ]
+}

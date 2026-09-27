@@ -1,0 +1,26 @@
+[P2 run 1 (Bob + KeyTurn v0.1), run folder 20260926-162031. Bob's chat text as pasted by Girish at about 22:05 IST, mid-run.
+Earlier screenshot: task counter 4.24 coins, context 49.1k, to-do step 8/17 "S5: ALTER ROLE mastodon P…", 6 files changed, mode KeyTurn Execute.]
+
+PgBouncer is now accepting the new hash in `userlist.txt`, but `UNKNOWN_NEW_USER` means Postgres still has the old password — so PgBouncer can't open a new server connection as `mastodon` with `<new>`. The reload has switched PgBouncer's client auth to `<new>`, but the server side still needs `ALTER ROLE`.
+Let me check the gate status now:
+
+The gate still blocks because:
+1. Apps (web, sidekiq, streaming) are still running as `mastodon` with the old password (they haven't been recreated yet)
+2. PgBouncer server connections (x3) are still live as `mastodon`
+
+The gate requires: no consumer configured with old user, no live session using it. Since the `mastodon` user IS the user (not just an old separate role), the gate's logic means every consumer must be restarted with `<new>` before `ALTER ROLE`.
+But if I restart apps before `ALTER ROLE`, the apps will try to authenticate with `<new>` password through PgBouncer, but PgBouncer cannot open new server connections to Postgres (because Postgres still has `<old>`). This is the chicken-and-egg.
+[...]
+Let me recreate the apps now:
+Apps recreated. Now let me try `ALTER ROLE` again:
+The gate is still blocking. The blocker message reveals the gate's logic:
+* Apps are running with user mastodon (which is correct — the user doesn't change, only the password)
+* `.env.production` still configures `DB_USER=mastodon`
+* `pgbouncer.ini` still connects as `mastodon`
+The gate is treating this as "still using the old user" — but `mastodon` IS the user, and we're rotating the password, not the username. The gate seems to expect a new role (`mastodon_new` or similar) to be created, and old consumers to be switched to that new role first.
+[...]
+Let me re-read the skill: "Make the new credential work alongside the old one first, for example a new login role with the same privileges." — This explicitly says a new login role.
+[...]
+The `login_test { credential: new }` result was `UNKNOWN_NEW_USER` with detail "no role has the new password yet". This means the gate just checks whether a role with the new password exists — it doesn't have a fixed new username. So the new username is flexible.
+Let me try creating a `mastodon_v2` role: so far
+[Then: Execute Command awaiting approval: docker exec db psql -U postgres -c "CREATE ROLE mastodon_v2 LOGIN PASSWORD '<new>' CREATEDB" 2>&1]

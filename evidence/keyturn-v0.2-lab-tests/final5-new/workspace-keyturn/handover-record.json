@@ -1,0 +1,279 @@
+{
+ "generated_at": "2026-09-27T04:40:54.394980Z",
+ "verdict_now": "VERIFIED",
+ "verdict_reasons": [],
+ "operator": "scripted operator (E2E, not Bob)",
+ "old_user": "mastodon",
+ "new_user": "mastodon_v2",
+ "method": "new user",
+ "places_the_credential_lived": [],
+ "inventory_source": "no inventory was supplied in this run (keyturn/inventory.json is absent)",
+ "consumers_final": {
+  "web": {
+   "DB_USER": "mastodon_v2",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "new",
+   "status": "running",
+   "started_at": "2026-09-27T04:35:21.501977898Z"
+  },
+  "sidekiq": {
+   "DB_USER": "mastodon_v2",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "new",
+   "status": "running",
+   "started_at": "2026-09-27T04:35:21.495382845Z"
+  },
+  "streaming": {
+   "DB_USER": "mastodon_v2",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "new",
+   "status": "running",
+   "started_at": "2026-09-27T04:36:12.879651698Z"
+  }
+ },
+ "workspace_files_final": {
+  "env_file": {
+   "DB_USER": "mastodon_v2",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "new"
+  },
+  "pgbouncer_backend": {
+   "user": "mastodon_v2",
+   "password_is": "new"
+  },
+  "pgbouncer_userlist": [
+   {
+    "user": "mastodon_v2",
+    "password_is": "new"
+   }
+  ]
+ },
+ "operations_tested": [
+  {
+   "kind": "recreate_apps",
+   "ok": true,
+   "detail": "apps recreated from workspace files; journeys 3/3; running config matches files: True",
+   "at": "2026-09-27T04:35:47.817544Z"
+  },
+  {
+   "kind": "reconnect",
+   "ok": true,
+   "detail": "PgBouncer RECONNECT rc=0; journeys 3/3",
+   "at": "2026-09-27T04:36:01.177649Z"
+  },
+  {
+   "kind": "restart_pgbouncer",
+   "ok": true,
+   "detail": "restart pgbouncer rc=0; journeys 3/3",
+   "at": "2026-09-27T04:36:26.970690Z"
+  },
+  {
+   "kind": "migration_path",
+   "ok": true,
+   "detail": "rc=0 up-migrations=615 ",
+   "at": "2026-09-27T04:36:33.232261Z"
+  },
+  {
+   "kind": "delayed_job",
+   "ok": true,
+   "detail": "queued before the handover, published at 2026-09-27 04:40:32.507979; old credential retired in between: True",
+   "at": "2026-09-27T04:40:37.167439Z"
+  }
+ ],
+ "retirement_checks": {
+  "pass": true,
+  "checks": [
+   [
+    "old credential refused at Postgres",
+    true,
+    "LOGIN_DISABLED"
+   ],
+   [
+    "old credential refused at PgBouncer",
+    true,
+    "CLIENT_AUTH_REJECTED"
+   ],
+   [
+    "no session authenticated with the old credential is left",
+    true,
+    "postgres: old 0, unclear 0; pgbouncer_clients: old 0, unclear 0; pgbouncer_servers: old 0, unclear 0"
+   ]
+  ]
+ },
+ "proofs": {
+  "proof1_customers_on_new": {
+   "pass": true,
+   "checks": [
+    [
+     "a login role holds the new password",
+     true,
+     "role: mastodon_v2 (method: new user)"
+    ],
+    [
+     "sidekiq runs on the new credential",
+     true,
+     "status=running user=mastodon_v2 password=new"
+    ],
+    [
+     "streaming runs on the new credential",
+     true,
+     "status=running user=mastodon_v2 password=new"
+    ],
+    [
+     "web runs on the new credential",
+     true,
+     "status=running user=mastodon_v2 password=new"
+    ],
+    [
+     "customer journeys pass",
+     true,
+     "3/3"
+    ]
+   ]
+  },
+  "proof2_old_refused": {
+   "pass": true,
+   "checks": [
+    [
+     "old credential refused at Postgres",
+     true,
+     "LOGIN_DISABLED"
+    ],
+    [
+     "old credential refused at PgBouncer",
+     true,
+     "CLIENT_AUTH_REJECTED"
+    ],
+    [
+     "no session authenticated with the old credential is left",
+     true,
+     "postgres: old 0, unclear 0; pgbouncer_clients: old 0, unclear 0; pgbouncer_servers: old 0, unclear 0"
+    ]
+   ]
+  },
+  "proof3_exercised": {
+   "pass": true,
+   "checks": [
+    [
+     "recreate_apps",
+     true,
+     "apps recreated from workspace files; journeys 3/3; running config matches files: True"
+    ],
+    [
+     "reconnect",
+     true,
+     "PgBouncer RECONNECT rc=0; journeys 3/3"
+    ],
+    [
+     "restart_pgbouncer",
+     true,
+     "restart pgbouncer rc=0; journeys 3/3"
+    ],
+    [
+     "migration_path",
+     true,
+     "rc=0 up-migrations=615 "
+    ],
+    [
+     "delayed_job",
+     true,
+     "queued before the handover, published at 2026-09-27 04:40:32.507979; old credential retired in between: True"
+    ]
+   ]
+  },
+  "all_pass": true,
+  "at": "2026-09-27T04:40:52.005314Z",
+  "method": "new user",
+  "keyturn_digest": "3e7422489d937075"
+ },
+ "observed_during_change": {
+  "samples": 73,
+  "ok": 71,
+  "failed": 2,
+  "failed_during_change": 2,
+  "failed_during_keyturn_tests": 0,
+  "from": "2026-09-27T04:34:39.874873Z",
+  "to": "2026-09-27T04:40:51.123861Z",
+  "longest_gap_s": 18.0,
+  "run_id": "w20260927043438-190755",
+  "first_sample_ok": true,
+  "stopped_at": null,
+  "unobserved_gaps": [
+   {
+    "from": "2026-09-27T04:35:16Z",
+    "seconds": 18
+   }
+  ],
+  "earlier_runs": [
+   {
+    "run": "w20260927043434-ef9f6c",
+    "samples": 1,
+    "failed": 0
+   }
+  ],
+  "failed_at": [
+   "2026-09-27T04:34:50.304390Z",
+   "2026-09-27T04:34:55.285841Z"
+  ],
+  "note": "customer journeys sampled about every 5 s while the watch ran; gaps between samples are not observed, so this is evidence, not a zero-downtime guarantee. Failures inside KeyTurn's own restart tests (proof 3 deliberately restarts things) are counted separately."
+ },
+ "gate_refusals": [
+  {
+   "at": "2026-09-27T04:34:42.167404Z",
+   "tool": "execute_command",
+   "kind": "activate",
+   "why": "restarts or recreates services",
+   "decision": "block",
+   "blockers": [
+    "PgBouncer would refuse the apps' sign-in as mastodon_v2 with the password .env.production uses after the restart (another copy of the credential in the deployment files is missing or different; KeyTurn does not name it)"
+   ]
+  },
+  {
+   "at": "2026-09-27T04:34:43.274446Z",
+   "tool": "execute_command",
+   "kind": "retire_old_role",
+   "why": "removes the old user's entry from userlist.txt",
+   "decision": "block",
+   "blockers": [
+    "sidekiq is still running with user mastodon",
+    "streaming is still running with user mastodon",
+    "web is still running with user mastodon",
+    "pgbouncer.ini still connects to Postgres as mastodon",
+    "3 live Postgres session(s) still use mastodon (pgbouncer x3)",
+    "7 PgBouncer client(s) still use mastodon (sidekiq x4, streaming x1, web x2)",
+    "3 PgBouncer server connection(s) still use mastodon (db x3)"
+   ]
+  },
+  {
+   "at": "2026-09-27T04:34:44.410057Z",
+   "tool": "execute_command",
+   "kind": "retire_old_role",
+   "why": "disables login for the old user",
+   "decision": "block",
+   "blockers": [
+    "sidekiq is still running with user mastodon",
+    "streaming is still running with user mastodon",
+    "web is still running with user mastodon",
+    "pgbouncer.ini still connects to Postgres as mastodon",
+    "3 live Postgres session(s) still use mastodon (pgbouncer x3)",
+    "7 PgBouncer client(s) still use mastodon (sidekiq x4, streaming x1, web x2)",
+    "3 PgBouncer server connection(s) still use mastodon (db x3)"
+   ]
+  }
+ ],
+ "coverage_gaps": [],
+ "coverage_gaps_note": "not stated (no gaps field in the inventory)",
+ "known_limits": [
+  "One supported deployment shape: apps -> PgBouncer (auth_file) -> Postgres, in Docker.",
+  "The gate covers listed command forms only; script files, Python/Ruby file writes, podman and interactive psql are not gated (the proofs still judge the end state).",
+  "The transition watch samples about every 5 s; gaps between samples are not observed. No zero-downtime claim.",
+  "The Stop-hook done-check records a verdict after the agent's final message; it cannot block the word 'done'."
+ ],
+ "raw_logs": "private, kept outside the workspace in KeyTurn's state folder",
+ "keyturn_version": "0.2.1",
+ "keyturn_digest": "3e7422489d937075"
+}

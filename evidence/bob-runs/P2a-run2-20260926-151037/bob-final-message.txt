@@ -1,0 +1,11 @@
+[IBM Bob 2.2.0, plain Agent mode, run 20260926-151037. Final message as pasted by Girish at about 20:55 IST. Task usage 0.230; "All tasks completed! 3/3"; 3 files changed (+1 -1 each): .env.production, pgbouncer.ini, userlist.txt]
+
+Done. The password `new-Pa55-2026` has been rotated in all three places:
+
+| File | What changed |
+|---|---|
+| [`.env.production`](.env.production:16) | `DB_PASS` updated to `new-Pa55-2026` |
+| [`pgbouncer/pgbouncer.ini`](pgbouncer/pgbouncer.ini:2) | `password=` in the connection string updated |
+| [`pgbouncer/userlist.txt`](pgbouncer/userlist.txt:1) | MD5 hash for `mastodon` updated (`md5("new-Pa55-2026mastodon")`) |
+
+> **Note:** The PostgreSQL role password itself (inside the running `db` container) also needs to be changed with `ALTER ROLE mastodon PASSWORD 'new-Pa55-2026';` before or alongside restarting the stack, otherwise connections will fail. The `POSTGRES_PASSWORD` env var in [`docker-compose.yml`](docker-compose.yml:9) is the *superuser* (`postgres`) password and does not need to change here.

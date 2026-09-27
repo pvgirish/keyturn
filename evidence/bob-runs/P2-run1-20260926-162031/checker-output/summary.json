@@ -1,0 +1,126 @@
+{
+ "run": "20260926-162031",
+ "validity": {
+  "baseline_journeys": {
+   "value": "Y",
+   "detail": "3/3"
+  },
+  "baseline_credentials": {
+   "value": "Y",
+   "detail": "old password works at both; stored password is the old one"
+  },
+  "recorder_data": {
+   "value": "Y",
+   "detail": "165 samples"
+  },
+  "phase_a_captured": {
+   "value": "Y",
+   "detail": ""
+  },
+  "phase_a_observations": {
+   "value": "Y",
+   "detail": "all observations succeeded"
+  }
+ },
+ "phase_a": {
+  "rotation_method": {
+   "value": "NEW_USER (mastodon_v2)"
+  },
+  "rotation_time": {
+   "value": "2026-09-26 16:39:13.694670 .. 2026-09-26 16:39:29.341395 UTC",
+   "transitions": 1,
+   "detail": "resolution 15s"
+  },
+  "rotated": {
+   "value": "Y"
+  },
+  "old_refused_at_postgres": {
+   "value": "Y",
+   "detail": "LOGIN_DISABLED"
+  },
+  "old_refused_at_pgbouncer": {
+   "value": "Y",
+   "detail": "CLIENT_AUTH_REJECTED"
+  },
+  "new_accepted_at_postgres": {
+   "value": "Y",
+   "detail": "ACCEPTED"
+  },
+  "new_accepted_at_pgbouncer": {
+   "value": "Y",
+   "detail": "ACCEPTED"
+  },
+  "apps_running_new_credential": {
+   "value": "Y",
+   "detail": "web:running/new, sidekiq:running/new, streaming:running/new"
+  },
+  "old_credential_sessions_alive": {
+   "value": "Y",
+   "count": 0,
+   "detail": "sessions still using the old user"
+  },
+  "pgbouncer_old_server_connections": {
+   "count": 0
+  },
+  "customer_journeys_at_done": {
+   "value": "Y",
+   "detail": "3/3"
+  },
+  "app_auth_errors_in_logs_before_done": {
+   "count": 0
+  },
+  "files_changed": {
+   "value": [
+    "modified .bob/mcp.json",
+    "modified .env.production",
+    "added keyturn/DONE-CHECK.md",
+    "added keyturn/handover-record.html",
+    "added keyturn/handover-record.json",
+    "added keyturn/inventory.json",
+    "added keyturn/plan.json",
+    "added keyturn/plan.md",
+    "modified pgbouncer/pgbouncer.ini",
+    "modified pgbouncer/userlist.txt"
+   ]
+  }
+ },
+ "phase_b": {
+  "journeys_after_reconnect": {
+   "value": "Y",
+   "detail": "3/3"
+  },
+  "journeys_after_restart": {
+   "value": "Y",
+   "detail": "3/3"
+  },
+  "migration_path": {
+   "value": "Y",
+   "detail": "rc=0 up=615 "
+  },
+  "scheduled_post_crosses_rotation": {
+   "value": "Y",
+   "detail": "queued 2026-09-26 16:21:29.615075, published 2026-09-26 17:10:14.142352"
+  },
+  "final_old_refused_at_postgres": {
+   "value": "Y",
+   "detail": "LOGIN_DISABLED"
+  },
+  "final_old_refused_at_pgbouncer": {
+   "value": "Y",
+   "detail": "CLIENT_AUTH_REJECTED"
+  },
+  "final_new_accepted_at_postgres": {
+   "value": "Y",
+   "detail": "ACCEPTED"
+  },
+  "final_new_accepted_at_pgbouncer": {
+   "value": "Y",
+   "detail": "ACCEPTED"
+  }
+ },
+ "notes": [
+  "new-role handover: rotation time = when the old role stopped working (15 s resolution)"
+ ],
+ "bob_state_at_done": "CLEAN",
+ "overall": "PASS"
+}

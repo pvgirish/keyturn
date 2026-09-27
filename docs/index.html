@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KeyTurn — makes “done” a result you can check</title>
+<meta name="description" content="KeyTurn helps engineers check that a planned database password change is complete. A kit for IBM Bob: modes, a skill, a gate hook, a done-check hook and a no-AI MCP checker.">
+<link rel="stylesheet" href="vendor/asciinema-player.css">
+<style>
+:root{--bg:#0f1216;--panel:#171b21;--line:#2a313a;--text:#e9edf1;--muted:#a7b1bb;--ok:#7ee2a8;--bad:#ff8a80;--warn:#ffcf6b;--link:#8cc8ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--link)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+h1{font-size:44px;line-height:1.1;margin:0 0 10px}
+h1 span{color:var(--ok)}
+.lead{font-size:20px;color:#d6dde4;max-width:820px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-block;padding:10px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--text);background:var(--panel)}
+.btn.primary{background:#1d6fd1;border-color:#1d6fd1}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+h2{font-size:28px;margin:0 0 14px}
+h3{font-size:19px;margin:22px 0 8px}
+.label{display:inline-block;font-size:13px;padding:3px 9px;border-radius:6px;background:var(--warn);color:#111;font-weight:600;margin-bottom:10px}
+.label.bob{background:#8cc8ff}
+video{width:100%;border-radius:10px;border:1px solid var(--line);background:#000}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.card b{color:#fff}
+figure{margin:0}
+figure img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+figcaption{font-size:14px;color:var(--muted);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.muted{color:var(--muted)}
+iframe{width:100%;height:640px;border:1px solid var(--line);border-radius:10px;background:#fff}
+pre{background:#0a0c0f;border:1px solid var(--line);border-radius:8px;padding:14px;overflow:auto;font-size:14px}
+ul{padding-left:22px}
+footer{padding:30px 0 50px;color:var(--muted);font-size:14px}
+@media (max-width:600px){h1{font-size:32px}.lead{font-size:18px}iframe{height:520px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>KeyTurn <span>makes “done” a result you can check.</span></h1>
+<p class="lead">For engineers carrying out a planned database password change with IBM Bob. KeyTurn checks that customers work with the new credential, the old one is refused, and reconnects and queued jobs still succeed — and keeps a handover record.</p>
+<div class="btns">
+<a class="btn primary" href="#video">Watch the 3-minute video</a>
+<a class="btn" href="#record">See a real handover record</a>
+<a class="btn" href="#replay">Replay the real lab run</a>
+<a class="btn" href="https://github.com/pvgirish/keyturn">Code and evidence on GitHub</a>
+</div>
+</div></header>
+
+<section id="video"><div class="wrap">
+<h2>The video</h2>
+<video controls preload="metadata" poster="media/poster.jpg">
+<source src="media/keyturn-video.mp4" type="video/mp4">
+<track kind="captions" src="media/keyturn-video-captions.vtt" srclang="en" label="English" default>
+</video>
+<p class="muted">Narrated by Girish. Every picture is a real capture: IBM Bob task screenshots (labelled with the KeyTurn version), KeyTurn's real handover record, and the real terminal run of the scripted lab demonstration (labelled “not Bob”).</p>
+</div></section>
+
+<section id="problem"><div class="wrap">
+<h2>Why editing the files is not enough</h2>
+<div class="grid">
+<div class="card"><b>Apps</b> read <code>.env.production</code> when they start. Running apps keep the old password until they are recreated.</div>
+<div class="card"><b>Connection pool</b> (PgBouncer) has its own config and auth file, and keeps open sessions that logged in with the old password.</div>
+<div class="card"><b>Database</b> stores the role's password. Until it changes, the old password still works — and nothing looks broken.</div>
+</div>
+<p>In our lab, under a short request, plain IBM Bob edited every copy of the password in the files and listed the live steps as next steps — <span class="bad">three times out of three the old password still worked</span>. With the outcome spelled out, plain Bob succeeded. The gap is the definition of “done”; KeyTurn makes it a reusable check.</p>
+</div></section>
+
+<section id="how"><div class="wrap">
+<h2>How it works inside IBM Bob</h2>
+<div class="grid">
+<div class="card"><b>Three custom modes</b><br>KeyTurn Inventory (read-only: every copy and who reads it) → KeyTurn Plan (ordered handover, either method) → KeyTurn Execute (checks after every step).</div>
+<div class="card"><b>A skill</b><br><code>credential-handover</code>: what “complete” means, both valid methods (same user, new user), and never printing a secret.</div>
+<div class="card"><b>A gate hook</b> (PreToolUse)<br>Refuses covered unsafe steps with the reason, e.g. restarting the apps onto a password the database would reject.</div>
+<div class="card"><b>A done-check hook</b> (Stop)<br>Records VERIFIED, FAILED or UNVERIFIED next to the work. It records; Bob's Stop hook cannot block “done”.</div>
+<div class="card"><b>A 12-tool MCP checker, no AI</b><br>Login tests, running config, sessions, customer probes, a transition watch, restart / reconnect / migration / delayed-job tests, the three proofs, the record.</div>
+<div class="card"><b>The three proofs</b><br>1 customers on the new credential · 2 old credential refused, no old sessions · 3 recreate, reconnect, restart, migration and a queued job all pass. VERIFIED only on the current state.</div>
+</div>
+<h3>Installed in Bob (real screenshots)</h3>
+<div class="grid">
+<figure><img src="img/settings-modes.jpg" alt="Bob Settings, Modes: KeyTurn Inventory, Plan and Execute listed as workspace modes"><figcaption>Modes: the three KeyTurn modes (workspace).</figcaption></figure>
+<figure><img src="img/settings-hooks.jpg" alt="Bob Settings, Hooks: three active workspace hooks"><figcaption>Hooks: UserPromptSubmit, PreToolUse, Stop — active.</figcaption></figure>
+<figure><img src="img/settings-mcp.jpg" alt="Bob Settings, MCP: keyturn server connected"><figcaption>MCP: the <code>keyturn</code> server, connected.</figcaption></figure>
+</div>
+</div></section>
+
+<section id="bob"><div class="wrap">
+<h2>IBM Bob using KeyTurn</h2>
+<span class="label bob">Genuine IBM Bob session · P2, 26 Sep · KeyTurn v0.1 · 35.07 Bobcoins</span>
+<p>Same short request as the failing runs. Bob used the KeyTurn modes and tools, traced the credential copies, planned the change and ran the checks; every final check passed (n = 1).</p>
+<div class="grid">
+<figure><img src="img/p2-01-prompt-skill.jpg" alt="Bob task: the short request and the credential-handover skill loading"><figcaption>The short request; Bob loads the <code>credential-handover</code> skill.</figcaption></figure>
+<figure><img src="img/p2-04-plan-mode.jpg" alt="Bob switches to keyturn-plan mode"><figcaption>Bob switches to KeyTurn Plan mode.</figcaption></figure>
+<figure><img src="img/p2-06-plan-diagram.jpg" alt="Bob's handover plan as a sequence diagram"><figcaption>Bob's plan: files, password change, pool reload, app recreate.</figcaption></figure>
+<figure><img src="img/p2-08-gate-refusal.jpg" alt="KeyTurn v0.1 gate refuses ALTER ROLE"><figcaption>v0.1's gate refuses a step. This v0.1 gate was over-strict (it allowed only the new-login method); v0.2 accepts both methods. Lab password masked.</figcaption></figure>
+<figure><img src="img/p2-09-final-proofs.jpg" alt="Bob's final message: all three proofs pass"><figcaption>End of the task: all three proofs pass.</figcaption></figure>
+</div>
+<h3>Latest: a read-only check with KeyTurn 0.2.1</h3>
+<span class="label bob">Genuine IBM Bob session · P3, 27 Sep · KeyTurn 0.2.1 · Ask mode · 0.121 Bobcoins</span>
+<p>A script left the lab half-changed (files on the new password, database unchanged). Asked to check without changing anything, Bob called KeyTurn’s checks (five tool calls) and answered: <b>“The handover is not complete — all three required proofs fail.”</b> It changed nothing; KeyTurn's done-check recorded FAILED. One of Bob's eight next steps was based on a misread hash (it said the pool's auth file held the old hash; it held the new one).</p>
+<div class="grid">
+<figure><img src="img/p3-07-verdict.jpg" alt="Bob P3 verdict: not complete"><figcaption>Bob's verdict. Lab password masked.</figcaption></figure>
+<figure><img src="img/p3-09-proof-results.jpg" alt="Bob P3: proof results all fail"><figcaption>Proof results, from KeyTurn's checks.</figcaption></figure>
+<figure><img src="img/p3-12-next-steps.jpg" alt="Bob P3: ordered next steps"><figcaption>What is still needed, in order (step 3 is unnecessary — see above).</figcaption></figure>
+</div>
+</div></section>
+
+<section id="record"><div class="wrap">
+<h2>A real handover record</h2>
+<span class="label">Scripted lab demonstration · KeyTurn 0.2.1 (code 3e742248) · synthetic data · not Bob</span>
+<p>This is the record KeyTurn wrote at the end of demo run 5. It opens with the current verdict, lists the three checks, what the transition watch saw (3 of 10 sampled journeys failed during the change), the steps the gate refused, and KeyTurn's known limits. <a href="record/handover-record-demo-run-5.html">Open it full-page</a>.</p>
+<iframe src="record/handover-record-demo-run-5.html" title="KeyTurn handover record, demo run 5" loading="lazy"></iframe>
+</div></section>
+
+<section id="replay"><div class="wrap">
+<h2>Replay the real lab run</h2>
+<span class="label">Scripted operator, not Bob · real terminal output · idle pauses shortened</span>
+<p>Demo run 5 on real Mastodon + PgBouncer + Postgres: files changed but not the live password (FAILED) → unsafe restart refused with the reason → ordered change with the watch running → restart and migration tests → VERIFIED → a file edit and a restart make it UNVERIFIED until the proofs run again.</p>
+<div id="player"></div>
+</div></section>
+
+<section id="evidence"><div class="wrap">
+<h2>Every run, nothing left out</h2>
+<span class="label">Small lab trials; prompts differ</span>
+<table>
+<tr><th>Run</th><th>Who</th><th>Request</th><th>Result</th></tr>
+<tr><td>P2a 1–3</td><td>Plain IBM Bob</td><td>short</td><td class="bad">0 of 3 — files edited, live password unchanged</td></tr>
+<tr><td>P2</td><td>Bob + KeyTurn v0.1</td><td>same short request</td><td class="ok">1 of 1 — all final checks passed (35.07 Bobcoins; over-strict gate and a timeout bug added cost)</td></tr>
+<tr><td>P2b</td><td>Plain IBM Bob</td><td>outcome spelled out</td><td class="ok">1 of 1 — all final checks passed (2.42 Bobcoins; cap raised mid-run)</td></tr>
+<tr><td>P3</td><td>Bob + KeyTurn 0.2.1</td><td>read-only check</td><td>found the half-changed handover not complete; changed nothing (0.121 Bobcoins)</td></tr>
+<tr><td>Lab tests</td><td>KeyTurn 0.2.1, scripted, not Bob</td><td>—</td><td>unit 81/81 · same user 69/69 · new user 55/55</td></tr>
+</table>
+<p class="muted">Judged by the same fixed checker (no AI) for P2a, P2 and P2b. No speed, cost or cause-and-effect claim. Full reports, Bob's messages, KeyTurn logs and task-cost screenshots: <a href="https://github.com/pvgirish/keyturn/tree/main/evidence">evidence/</a> and <a href="https://github.com/pvgirish/keyturn/tree/main/bob_sessions">bob_sessions/</a>.</p>
+</div></section>
+
+<section id="run"><div class="wrap">
+<h2>Run it yourself</h2>
+<pre>git clone https://github.com/pvgirish/keyturn && cd keyturn/lab/harness
+./setup_stack.sh && ./before_p2a.sh        # Docker; builds the lab in ~/mastodon-ops
+./install_keyturn.sh                       # installs KeyTurn into that Bob workspace
+python3 -m unittest discover -s ../../keyturn/tests   # 81 tests, Python 3.9+ standard library</pre>
+<p>Open <code>~/mastodon-ops</code> in IBM Bob, check Settings → Modes, Skills, Hooks and MCP, and ask Bob to rotate the database password. Synthetic lab data only.</p>
+<h3>Limits</h3>
+<ul>
+<li>One deployment shape today: apps → PgBouncer (auth_file) → Postgres, in Docker.</li>
+<li>Covered commands only: script files, Python/Ruby file writes, podman and interactive psql are not gated (the proofs still judge the end state).</li>
+<li>Customer checks are sampled about every 5 s. No zero-downtime promise.</li>
+<li>Bob's Stop hook cannot block “done”; KeyTurn records a verdict instead.</li>
+</ul>
+</div></section>
+
+<footer><div class="wrap">
+KeyTurn · IBM Bob 2.0 hackathon (lablab.ai, Sep 2026) · team TeamPVG-CG-CC · MIT licence.<br>
+IBM Bob did the investigation, plans and changes in the Bob runs. KeyTurn's code, the lab kit, this page and the video edit were written by the team with an AI coding assistant (Claude by Anthropic). Replay player: asciinema-player (Apache-2.0).
+</div></footer>
+
+<script src="vendor/asciinema-player.min.js"></script>
+<script>
+AsciinemaPlayer.create('replay/demo-run-5.cast', document.getElementById('player'),
+  {cols: 100, rows: 28, idleTimeLimit: 1.5, speed: 1.5, fit: 'width', theme: 'monokai', poster: 'npt:0:12'});
+</script>
+</body>
+</html>

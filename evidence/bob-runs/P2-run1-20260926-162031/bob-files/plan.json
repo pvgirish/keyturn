@@ -1,0 +1,153 @@
+{
+  "title": "Mastodon DB password rotation — overlap handover",
+  "strategy": "Overlap at PgBouncer: update all config files and the Postgres role atomically, reload PgBouncer (existing pooled connections survive), then recreate apps. The delayed job is queued before the first change and checked after the last.",
+  "steps": [
+    {
+      "id": "S0",
+      "phase": "pre-flight",
+      "action": "delayed_job schedule",
+      "detail": "Queue a customer scheduled post now, before any credential change. This proves the job runs to completion after the handover.",
+      "tool": "mcp__keyturn__delayed_job { action: schedule }",
+      "check": "Confirm job is queued. Record job reference."
+    },
+    {
+      "id": "S1",
+      "phase": "pre-flight",
+      "action": "Baseline customer probe",
+      "detail": "Run 1 customer journey to confirm everything is healthy on <old> before touching anything.",
+      "tool": "mcp__keyturn__customer_probe { n: 1 }",
+      "check": "1/1 journeys OK."
+    },
+    {
+      "id": "S2",
+      "phase": "file-update",
+      "action": "Update pgbouncer/pgbouncer.ini",
+      "detail": "Change password=<old> to password=<new> in the mastodon_production connection string. Do NOT reload PgBouncer yet — file change only.",
+      "file": "pgbouncer/pgbouncer.ini",
+      "line": 2,
+      "change": "password=<old> → password=<new> in [databases] connection string"
+    },
+    {
+      "id": "S3",
+      "phase": "file-update",
+      "action": "Update pgbouncer/userlist.txt",
+      "detail": "Replace the mastodon md5 hash entry with the hash of <new>. The md5 hash is md5(password+username) = md5('<new>mastodon'). Do NOT reload PgBouncer yet.",
+      "file": "pgbouncer/userlist.txt",
+      "line": 1,
+      "change": "\"mastodon\" \"md5<hash-of-old>\" → \"mastodon\" \"md5<hash-of-new>\""
+    },
+    {
+      "id": "S4",
+      "phase": "file-update",
+      "action": "Update .env.production",
+      "detail": "Change DB_PASS=<old> to DB_PASS=<new>. The app containers will not pick this up until they are recreated in S7.",
+      "file": ".env.production",
+      "line": 16,
+      "change": "DB_PASS=<old> → DB_PASS=<new>"
+    },
+    {
+      "id": "S5",
+      "phase": "db-change",
+      "action": "ALTER ROLE mastodon PASSWORD '<new>'",
+      "detail": "Run ALTER ROLE in Postgres so the database accepts <new>. PgBouncer's existing pooled and authenticated server connections remain live — they do not re-authenticate. New server connections from PgBouncer will use the password in pgbouncer.ini, which was updated in S2.",
+      "how": "docker exec db psql -U postgres -c \"ALTER ROLE mastodon PASSWORD '<new>'\""
+    },
+    {
+      "id": "S6",
+      "phase": "pgbouncer-reload",
+      "action": "Reload PgBouncer",
+      "detail": "Reload PgBouncer so it reads the updated pgbouncer.ini (server password) and userlist.txt (client hash). PgBouncer sends SIGHUP or RELOAD; existing pooled connections to Postgres survive the reload. New client connections will be authenticated against the new hash. Apps still run with <old> in env — they are still accepted briefly via existing pooled connections and the reload window.",
+      "how": "docker kill --signal=SIGHUP pgbouncer  OR  docker exec pgbouncer psql -U pgbouncer -p 6432 pgbouncer -c 'RELOAD'",
+      "check": "mcp__keyturn__login_test { credential: new, via: pgbouncer } → ACCEPTED\nmcp__keyturn__login_test { credential: old, via: pgbouncer } → REFUSED\nmcp__keyturn__customer_probe { n: 1 } → 1/1 OK (apps still running on cached pooled connections)"
+    },
+    {
+      "id": "S7",
+      "phase": "app-recreate",
+      "action": "Recreate web, sidekiq, streaming containers",
+      "detail": "Recreate the three app containers so they pick up DB_PASS=<new> from .env.production. PgBouncer is already accepting <new> from clients (S6). Docker Compose recreates one service while the pooler continues serving from others.",
+      "how": "docker compose up -d --force-recreate web sidekiq streaming",
+      "check": "mcp__keyturn__fresh_connection { kind: recreate_apps } — this recreates apps from workspace files and runs 3 customer journeys."
+    },
+    {
+      "id": "S8",
+      "phase": "check",
+      "action": "Post-recreate customer probe",
+      "detail": "Full customer journey check after apps are up on <new>.",
+      "tool": "mcp__keyturn__customer_probe { n: 3 }",
+      "check": "3/3 journeys OK."
+    },
+    {
+      "id": "S9",
+      "phase": "proof-collection",
+      "action": "Exercise fresh-connection scenarios",
+      "detail": "Run PgBouncer reconnect, PgBouncer restart, and migration path tests to collect proof 3.",
+      "tools": [
+        "mcp__keyturn__fresh_connection { kind: reconnect }",
+        "mcp__keyturn__fresh_connection { kind: restart_pgbouncer }",
+        "mcp__keyturn__migration_path"
+      ],
+      "check": "All three pass with 3/3 customer journeys each."
+    },
+    {
+      "id": "S10",
+      "phase": "gate-check",
+      "action": "gate_status → PASS, then confirm old credential refused",
+      "detail": "Only retire when gate is PASS: no service configured with <old>, no live session using it, delayed job is queued.",
+      "tools": [
+        "mcp__keyturn__gate_status → PASS required",
+        "mcp__keyturn__login_test { credential: old, via: postgres } → REFUSED",
+        "mcp__keyturn__login_test { credential: old, via: pgbouncer } → REFUSED"
+      ]
+    },
+    {
+      "id": "S11",
+      "phase": "delayed-job-check",
+      "action": "Check delayed job runs on new credential",
+      "detail": "Make the scheduled post due and confirm it publishes.",
+      "tool": "mcp__keyturn__delayed_job { action: check }",
+      "check": "Job PUBLISHED."
+    },
+    {
+      "id": "S12",
+      "phase": "proofs",
+      "action": "Evaluate three proofs of done",
+      "tool": "mcp__keyturn__proofs",
+      "check": "All three proofs pass."
+    },
+    {
+      "id": "S13",
+      "phase": "record",
+      "action": "Write handover record",
+      "tool": "mcp__keyturn__record",
+      "check": "keyturn/handover-record.json and .html written."
+    }
+  ],
+  "three_proofs": {
+    "proof_1": {
+      "title": "Customer actions pass on the new credential",
+      "checks": [
+        "mcp__keyturn__customer_probe after S7 (3/3 journeys OK)",
+        "mcp__keyturn__login_test { credential: new, via: pgbouncer } → ACCEPTED",
+        "mcp__keyturn__login_test { credential: new, via: postgres } → ACCEPTED"
+      ]
+    },
+    "proof_2": {
+      "title": "Old credential refused everywhere, no old sessions",
+      "checks": [
+        "mcp__keyturn__login_test { credential: old, via: postgres } → REFUSED",
+        "mcp__keyturn__login_test { credential: old, via: pgbouncer } → REFUSED",
+        "mcp__keyturn__gate_status → PASS (no old sessions, no old config)"
+      ]
+    },
+    "proof_3": {
+      "title": "Fresh connections, restarts, migration path, and delayed job exercised on new state",
+      "checks": [
+        "mcp__keyturn__fresh_connection { kind: reconnect } → OK",
+        "mcp__keyturn__fresh_connection { kind: restart_pgbouncer } → OK",
+        "mcp__keyturn__fresh_connection { kind: recreate_apps } → OK",
+        "mcp__keyturn__migration_path → OK",
+        "mcp__keyturn__delayed_job { action: check } → PUBLISHED"
+      ]
+    }
+  }
+}

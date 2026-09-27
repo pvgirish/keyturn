@@ -1,0 +1,11 @@
+{
+ ".bob/custom_modes.yaml": "a0728aa4928aa9511a6516742fe3618335108b253d3dbbc5ff5e9641385e79f8",
+ ".bob/mcp.json": "064d42a6b95b6912630adc5f1a0b0f5cb3ca9f6e48107ced2b75f32c172f419a",
+ ".bob/settings.json": "c09f9ee2f8587b235485f5a1c775bcf8ab0678c54bf5c6a52c609be1ac98477e",
+ ".bob/skills/credential-handover/SKILL.md": "d40bb9810f7ed30e5b63dbd0711805ac7e5c012bedd8612e843874c9b0519985",
+ ".env.production": "a815d3ddabdb2ad904401c6e76b4a7a9621f593ebb7d4faceb223f5835e12d25",
+ "docker-compose.yml": "99a8e293c0625ba91947b191559a4a987bef7eafa051716c9c18b5e802124dad",
+ "new_password.txt": "2ec10dfd3c4b401ab7adfa14e86fe902b786907bec5d8e4c4b2ca87149e4c496",
+ "pgbouncer/pgbouncer.ini": "69ca56777da0d98f176551d3d267ef4848acae605063f3c32dea6d273ae8fd38",
+ "pgbouncer/userlist.txt": "d0215876a2e02727e43ee40a9a22b83b5960c9758d04add356ab9424ca03e78e"
+}

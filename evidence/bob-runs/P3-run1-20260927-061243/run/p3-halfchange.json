@@ -1,0 +1,11 @@
+{
+ "p3_halfchange_utc": "2026-09-27T06:13:47Z",
+ "by": "p3_halfchange.py (scripted set-up, not Bob)",
+ "files_edited": [
+  ".env.production",
+  "pgbouncer/pgbouncer.ini",
+  "pgbouncer/userlist.txt"
+ ],
+ "database_changed": false,
+ "services_restarted": false
+}

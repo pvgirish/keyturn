@@ -1,0 +1,28 @@
+{
+ "mcpServers": {
+  "keyturn": {
+   "command": "/usr/bin/python3",
+   "args": [
+    "/Users/<user>/.keyturn/app/keyturn/mcp_server.py"
+   ],
+   "cwd": "/Users/<user>/mastodon-ops",
+   "env": {
+    "KEYTURN_HOME": "/Users/<user>/.keyturn",
+    "PATH": "/usr/local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "KEYTURN_DOCKER": "/usr/local/bin/docker"
+   },
+   "alwaysAllow": [
+    "sessions_by_user",
+    "consumer_config",
+    "login_test",
+    "customer_probe",
+    "gate_status",
+    "inventory_verify",
+    "proofs",
+    "watch"
+   ],
+   "disabled": false,
+   "timeout": 300000
+  }
+ }
+}

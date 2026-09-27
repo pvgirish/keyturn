@@ -1,0 +1,1 @@
+{"at": "2026-09-27T06:14:00.755045Z", "tool": "execute_command", "kind": "activate", "why": "restarts or recreates services", "decision": "block", "blockers": ["Postgres refuses the user/password in .env.production, so the apps would fail after the restart", "Postgres refuses the user/password in pgbouncer.ini, so PgBouncer's new server connections would fail"]}

@@ -1,0 +1,37 @@
+{
+ "hooks": {
+  "PreToolUse": [
+   {
+    "hooks": [
+     {
+      "type": "command",
+      "command": "/usr/bin/python3 /Users/<user>/.keyturn/app/keyturn/hook_revoke.py",
+      "timeout": 30
+     }
+    ]
+   }
+  ],
+  "Stop": [
+   {
+    "hooks": [
+     {
+      "type": "command",
+      "command": "/usr/bin/python3 /Users/<user>/.keyturn/app/keyturn/hook_done.py --stop",
+      "timeout": 60
+     }
+    ]
+   }
+  ],
+  "UserPromptSubmit": [
+   {
+    "hooks": [
+     {
+      "type": "command",
+      "command": "/usr/bin/python3 /Users/<user>/.keyturn/app/keyturn/hook_done.py --prompt",
+      "timeout": 10
+     }
+    ]
+   }
+  ]
+ }
+}

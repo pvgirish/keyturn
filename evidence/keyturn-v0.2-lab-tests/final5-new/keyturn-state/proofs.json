@@ -1,0 +1,157 @@
+{
+ "proof1_customers_on_new": {
+  "pass": true,
+  "checks": [
+   [
+    "a login role holds the new password",
+    true,
+    "role: mastodon_v2 (method: new user)"
+   ],
+   [
+    "sidekiq runs on the new credential",
+    true,
+    "status=running user=mastodon_v2 password=new"
+   ],
+   [
+    "streaming runs on the new credential",
+    true,
+    "status=running user=mastodon_v2 password=new"
+   ],
+   [
+    "web runs on the new credential",
+    true,
+    "status=running user=mastodon_v2 password=new"
+   ],
+   [
+    "customer journeys pass",
+    true,
+    "3/3"
+   ]
+  ]
+ },
+ "proof2_old_refused": {
+  "pass": true,
+  "checks": [
+   [
+    "old credential refused at Postgres",
+    true,
+    "LOGIN_DISABLED"
+   ],
+   [
+    "old credential refused at PgBouncer",
+    true,
+    "CLIENT_AUTH_REJECTED"
+   ],
+   [
+    "no session authenticated with the old credential is left",
+    true,
+    "postgres: old 0, unclear 0; pgbouncer_clients: old 0, unclear 0; pgbouncer_servers: old 0, unclear 0"
+   ]
+  ]
+ },
+ "proof3_exercised": {
+  "pass": true,
+  "checks": [
+   [
+    "recreate_apps",
+    true,
+    "apps recreated from workspace files; journeys 3/3; running config matches files: True"
+   ],
+   [
+    "reconnect",
+    true,
+    "PgBouncer RECONNECT rc=0; journeys 3/3"
+   ],
+   [
+    "restart_pgbouncer",
+    true,
+    "restart pgbouncer rc=0; journeys 3/3"
+   ],
+   [
+    "migration_path",
+    true,
+    "rc=0 up-migrations=615 "
+   ],
+   [
+    "delayed_job",
+    true,
+    "queued before the handover, published at 2026-09-27 04:40:32.507979; old credential retired in between: True"
+   ]
+  ]
+ },
+ "observation_errors": [],
+ "method": "new user",
+ "all_pass": true,
+ "at": "2026-09-27T04:41:20.508131Z",
+ "fingerprint": "58ee65e0c4884ba4",
+ "old_user": "mastodon",
+ "new_user": "mastodon_v2",
+ "change_bracket": [
+  null,
+  null
+ ],
+ "transition": {
+  "samples": 77,
+  "ok": 75,
+  "failed": 2,
+  "failed_during_change": 2,
+  "failed_during_keyturn_tests": 0,
+  "from": "2026-09-27T04:34:39.874873Z",
+  "to": "2026-09-27T04:41:20.284386Z",
+  "longest_gap_s": 18.0,
+  "run_id": "w20260927043438-190755",
+  "first_sample_ok": true,
+  "stopped_at": null,
+  "unobserved_gaps": [
+   {
+    "from": "2026-09-27T04:35:16Z",
+    "seconds": 18
+   },
+   {
+    "from": "2026-09-27T04:40:51Z",
+    "seconds": 17
+   }
+  ],
+  "earlier_runs": [
+   {
+    "run": "w20260927043434-ef9f6c",
+    "samples": 1,
+    "failed": 0
+   }
+  ],
+  "failed_at": [
+   "2026-09-27T04:34:50.304390Z",
+   "2026-09-27T04:34:55.285841Z"
+  ],
+  "note": "customer journeys sampled about every 5 s while the watch ran; gaps between samples are not observed, so this is evidence, not a zero-downtime guarantee. Failures inside KeyTurn's own restart tests (proof 3 deliberately restarts things) are counted separately."
+ },
+ "runtime_state": {
+  "web": {
+   "status": "running",
+   "id": "340f68c6d098",
+   "started_at": "2026-09-27T04:35:21.501977898Z"
+  },
+  "sidekiq": {
+   "status": "running",
+   "id": "b3701196b530",
+   "started_at": "2026-09-27T04:40:57.155394402Z"
+  },
+  "streaming": {
+   "status": "running",
+   "id": "3032634a33d8",
+   "started_at": "2026-09-27T04:36:12.879651698Z"
+  },
+  "pgbouncer": {
+   "status": "running",
+   "id": "a79b8a98fbe7",
+   "started_at": "2026-09-27T04:36:12.741342163Z"
+  },
+  "db": {
+   "status": "running",
+   "id": "070bb5092bbe",
+   "started_at": "2026-09-27T04:33:47.055019503Z"
+  }
+ },
+ "keyturn_version": "0.2.1",
+ "keyturn_digest": "3e7422489d937075"
+}

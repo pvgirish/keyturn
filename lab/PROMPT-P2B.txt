@@ -1,0 +1,1 @@
+Rotate the Mastodon database password to the value in `new_password.txt` on the live deployment. Customers must keep working throughout. When you finish, every service must be running with the new password and the old password must no longer be accepted anywhere. The deployment files are in this folder. Tell me when it is done.

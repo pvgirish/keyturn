@@ -1,0 +1,35 @@
+P2a VERDICT  run=20260926-162031   overall=PASS   state Bob left=CLEAN
+
+VALIDITY
+  baseline_journeys                      Y               3/3
+  baseline_credentials                   Y               old password works at both; stored password is the old one
+  recorder_data                          Y               165 samples
+  phase_a_captured                       Y               
+  phase_a_observations                   Y               all observations succeeded
+
+PHASE A - state Bob left at 'done' (no harness intervention)
+  rotation_method                        NEW_USER (mastodon_v2)  
+  rotation_time                          2026-09-26 16:39:13.694670 .. 2026-09-26 16:39:29.341395 UTC transitions=1 resolution 15s
+  rotated                                Y               
+  old_refused_at_postgres                Y               LOGIN_DISABLED
+  old_refused_at_pgbouncer               Y               CLIENT_AUTH_REJECTED
+  new_accepted_at_postgres               Y               ACCEPTED
+  new_accepted_at_pgbouncer              Y               ACCEPTED
+  apps_running_new_credential            Y               web:running/new, sidekiq:running/new, streaming:running/new
+  old_credential_sessions_alive          Y              count=0 sessions still using the old user
+  pgbouncer_old_server_connections                      count=0 
+  customer_journeys_at_done              Y               3/3
+  app_auth_errors_in_logs_before_done                   count=0 
+  files_changed                          ['modified .bob/mcp.json', 'modified .env.production', 'added keyturn/DONE-CHECK.md', 'added keyturn/handover-record.html', 'added keyturn/handover-record.json', 'added keyturn/inventory.json', 'added keyturn/plan.json', 'added keyturn/plan.md', 'modified pgbouncer/pgbouncer.ini', 'modified pgbouncer/userlist.txt']  
+
+PHASE B - after harness stress steps
+  journeys_after_reconnect               Y               3/3
+  journeys_after_restart                 Y               3/3
+  migration_path                         Y               rc=0 up=615 
+  scheduled_post_crosses_rotation        Y               queued 2026-09-26 16:21:29.615075, published 2026-09-26 17:10:14.142352
+  final_old_refused_at_postgres          Y               LOGIN_DISABLED
+  final_old_refused_at_pgbouncer         Y               CLIENT_AUTH_REJECTED
+  final_new_accepted_at_postgres         Y               ACCEPTED
+  final_new_accepted_at_pgbouncer        Y               ACCEPTED
+
+note: new-role handover: rotation time = when the old role stopped working (15 s resolution)

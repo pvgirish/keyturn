@@ -1,0 +1,283 @@
+{
+ "phase": "new",
+ "kind": "deterministic test without Bob",
+ "passed": 55,
+ "total": 55,
+ "checks": [
+  {
+   "check": "install.sh",
+   "ok": true,
+   "detail": "  : /root/mastodon-ops/.bob/ (custom_modes.yaml, skills/credential-handover, settings.json hooks, mcp.json)\n  done-check     : check (Stop hook records a verdict; next prompt is told if a done was unverified)\nCheck: KEYTURN_HOME=/root/.keyturn-e2e python3 /root/.keyturn-e2e/app/keyturn/selfcheck.py\n"
+  },
+  {
+   "check": "mcp.json timeout is 300000 (ms)",
+   "ok": true,
+   "detail": "300000"
+  },
+  {
+   "check": "hooks: PreToolUse gate, Stop done-check, UserPromptSubmit note",
+   "ok": true,
+   "detail": "['PreToolUse', 'Stop', 'UserPromptSubmit']"
+  },
+  {
+   "check": "no secret in .bob",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "skill/modes never name the hidden file",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "selfcheck runs",
+   "ok": true,
+   "detail": "ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify counts places)\",\n  \"reload or restart PgBouncer or the apps: READY\"\n ],\n \"observation_errors\": []\n}\n"
+  },
+  {
+   "check": "MCP server 0.2.1 with 12 tools incl. watch",
+   "ok": true,
+   "detail": "['sessions_by_user', 'consumer_config', 'login_test', 'customer_probe', 'gate_status', 'watch', 'fresh_connection', 'migration_path', 'delayed_job', 'inventory_verify', 'proofs', 'record']"
+  },
+  {
+   "check": "delayed job queued before the change",
+   "ok": true,
+   "detail": "{'status': 'QUEUED', 'scheduled_id': '1', 'detail': \"A customer's scheduled post is queued (due in 2 days). Check it after the handover with delayed_job action=check.\"}"
+  },
+  {
+   "check": "transition watch started",
+   "ok": true,
+   "detail": "{'status': 'RUNNING', 'run_id': 'w20260927043434-ef9f6c', 'first_sample_ok': True, 'detail': 'first sample passed; customer journeys and stored-password checks about every 5 s until watch action=stop (max 45 min)'}"
+  },
+  {
+   "check": "restarting the watch starts a new run with its own passing first sample",
+   "ok": true,
+   "detail": "{'status': 'RUNNING', 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'detail': 'first sample passed; customer journeys and stored-password checks about every 5 s until watch action=stop (max 45 min)'}"
+  },
+  {
+   "check": "gate allows creating the new role (not covered)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "create role mastodon_v2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "gate blocks recreating apps while userlist.txt has no entry for the new user",
+   "ok": true,
+   "detail": "Blocked by the KeyTurn gate: this step restarts or recreates services, and it is not safe yet:\n  - PgBouncer would refuse the apps' sign-in as mastodon_v2 with the password .env.production uses after the restart (another copy of the credential in the deployment files is missing or different; KeyTurn does not name it)\nReloading or restarting now would leave services on credentials that do not work "
+  },
+  {
+   "check": "gate blocks copying a userlist without the old user over the real one while it is in use",
+   "ok": true,
+   "detail": "Blocked by the KeyTurn gate: this step removes the old user's entry from userlist.txt, and it is not safe yet:\n  - sidekiq is still running with user mastodon\n  - streaming is still running with user mastodon\n  - web is still running with user mastodon\n  - pgbouncer.ini still connects to Postgres as mastodon\n  - 3 live Postgres session(s) still use mastodon (pgbouncer x3)\n  - 7 PgBouncer client(s)"
+  },
+  {
+   "check": "gate blocks retiring the old role while it is in use",
+   "ok": true,
+   "detail": "Blocked by the KeyTurn gate: this step disables login for the old user, and it is not safe yet:\n  - sidekiq is still running with user mastodon\n  - streaming is still running with user mastodon\n  - web is still running with user mastodon\n  - pgbouncer.ini still connects to Postgres as mastodon\n  - 3 live Postgres session(s) still use mastodon (pgbouncer x3)\n  - 7 PgBouncer client(s) still use mast"
+  },
+  {
+   "check": "gate allows RELOAD once every file credential works",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pgbouncer RELOAD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pgbouncer RECONNECT",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "gate allows recreating the apps",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "recreate apps on the new user",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "customers 3/3 on the new user (overlap)",
+   "ok": true,
+   "detail": "3/3 customer journeys OK"
+  },
+  {
+   "check": "gate_status: retire READY once nothing uses the old user",
+   "ok": true,
+   "detail": "['retire the old role (new-user method): READY', \"change the old role's password in place (same-user method): NOT READY - .env.production does not yet set mastodon with the new password; pgbouncer.ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify cou"
+  },
+  {
+   "check": "gate_status: in-place change NOT READY in the new-user method",
+   "ok": true,
+   "detail": "['retire the old role (new-user method): READY', \"change the old role's password in place (same-user method): NOT READY - .env.production does not yet set mastodon with the new password; pgbouncer.ini does not yet connect as mastodon with the new password; another copy of mastodon's password in the deployment files still differs from the new password (KeyTurn does not name it; inventory_verify cou"
+  },
+  {
+   "check": "gate allows retiring the old role",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "retire: NOLOGIN",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "gate allows removing the old userlist entry",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "gate allows the final RELOAD",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pgbouncer RELOAD after retire",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "proof 3: recreate_apps ok",
+   "ok": true,
+   "detail": "apps recreated from workspace files; journeys 3/3; running config matches files: True"
+  },
+  {
+   "check": "proof 3: reconnect ok",
+   "ok": true,
+   "detail": "PgBouncer RECONNECT rc=0; journeys 3/3"
+  },
+  {
+   "check": "proof 3: restart_pgbouncer ok",
+   "ok": true,
+   "detail": "restart pgbouncer rc=0; journeys 3/3"
+  },
+  {
+   "check": "proof 3: migration path ok",
+   "ok": true,
+   "detail": "rc=0 up-migrations=615 "
+  },
+  {
+   "check": "proof 3: delayed job queued before the change published after it",
+   "ok": true,
+   "detail": "{'kind': 'delayed_job', 'ok': True, 'detail': 'queued before the handover, published at 2026-09-27 04:40:32.507979; old credential retired in between: True', 'at': '2026-09-27T04:40:37.167439Z', 'fingerprint': '58ee65e0c4884ba4'}"
+  },
+  {
+   "check": "ALL THREE PROOFS PASS (new user method)",
+   "ok": true,
+   "detail": "{'proof1_customers_on_new': True, 'proof2_old_refused': True, 'proof3_exercised': True, 'method': 'new user'}"
+  },
+  {
+   "check": "proofs report the transition watch separately",
+   "ok": true,
+   "detail": "{'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',"
+  },
+  {
+   "check": "watch summary is scoped to one run that began with a passing sample",
+   "ok": true,
+   "detail": "{'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',"
+  },
+  {
+   "check": "proofs carry the KeyTurn revision and the running-services snapshot",
+   "ok": true,
+   "detail": "{'keyturn_version': '0.2.1', 'keyturn_digest': '3e7422489d937075'}"
+  },
+  {
+   "check": "watch splits failures: during the change vs during KeyTurn's own restart tests",
+   "ok": true,
+   "detail": "{'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',"
+  },
+  {
+   "check": "KeyTurn logs the time window of each of its own restart tests",
+   "ok": true,
+   "detail": "[{'kind': 'recreate_apps', 'start': '2026-09-27T04:35:18.847849Z', 'end': '2026-09-27T04:35:48.080394Z', 'status': 'ok'}, {'kind': 'reconnect', 'start': '2026-09-27T04:35:48.081134Z', 'end': '2026-09-27T04:36:01.426593Z', 'status': 'ok'}, {'kind': 'restart_pgbouncer', 'start': '2026-09-27T04:36:01.427395Z', 'end': '2026-09-27T04:36:27.300872Z', 'status': 'ok'}]"
+  },
+  {
+   "check": "Stop done-check: VERIFIED even when the message says 'Not done' (no keyword inference)",
+   "ok": true,
+   "detail": "# KeyTurn done-check (2026-09-27T04:40:52.514313Z)\n\n**VERIFIED: all three proofs pass on the current state**\n\nThe agent's final message began (quoted, not interpreted):\n\n> Not done; the live rotation is still pending.\n\nRecorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.0"
+  },
+  {
+   "check": "UserPromptSubmit adds nothing after a VERIFIED check",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "optional finish gate allows when verified",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "record written with observed_during_change",
+   "ok": true,
+   "detail": "{'samples': 73, 'ok': 71, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:40:51.123861Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}], 'earlier_runs': [{'run': 'w20260927043434-ef9f6c',"
+  },
+  {
+   "check": "record has no secrets",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "record states the current verdict, operator, revision, no-inventory note and known limits",
+   "ok": true,
+   "detail": "{'verdict_now': 'VERIFIED', 'operator': 'scripted operator (E2E, not Bob)', 'inventory_source': 'no inventory was supplied in this run (keyturn/inventory.json is absent)', 'coverage_gaps_note': 'not stated (no gaps field in the inventory)'}"
+  },
+  {
+   "check": "Stop done-check: UNVERIFIED when the files changed after the proofs (stale)",
+   "ok": true,
+   "detail": "# KeyTurn done-check (2026-09-27T04:40:54.921166Z)\n\n**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**\n\nWhat is missing or failing:\n- the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again)\n\nThe agent's final message began (quoted, not interpreted):\n\n> Done.\n\nRecorded by KeyTurn's Stop hook after the agent's final message. In IB"
+  },
+  {
+   "check": "UserPromptSubmit reminds Bob of the UNVERIFIED check",
+   "ok": true,
+   "detail": "[KeyTurn done-check 2026-09-27T04:40:54.921166Z] UNVERIFIED: KeyTurn cannot confirm the handover on the current state. Missing: the proofs are stale: roles, deployment files or app settings changed after they ran (run proofs again). The handover is not verified until the KeyTurn proofs tool says ALL"
+  },
+  {
+   "check": "Stop done-check: VERIFIED again once the state matches the proofs",
+   "ok": true,
+   "detail": "# KeyTurn done-check (2026-09-27T04:40:55.632730Z)\n\n**VERIFIED: all three proofs pass on the current state**\n\nThe agent's final message began (quoted, not interpreted):\n\n> Done.\n\nRecorded by KeyTurn's"
+  },
+  {
+   "check": "Stop done-check: UNVERIFIED after an app is stopped, without rerunning the proofs",
+   "ok": true,
+   "detail": "# KeyTurn done-check (2026-09-27T04:40:57.116155Z)\n\n**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**\n\nWhat is missing or failing:\n- services changed after the proofs ran: sidekiq is exited now (was running) (run proofs again)\n\nThe agent's final message began (quoted, not interpreted):\n\n> Done.\n\nRecorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2."
+  },
+  {
+   "check": "Stop done-check: still UNVERIFIED after the app is started again (it was restarted)",
+   "ok": true,
+   "detail": "# KeyTurn done-check (2026-09-27T04:41:01.048198Z)\n\n**UNVERIFIED: KeyTurn cannot confirm the handover on the current state**\n\nWhat is missing or failing:\n- services changed after the proofs ran: sidekiq was restarted (run proofs again)\n\nThe agent's final message began (quoted, not interpreted):\n\n> Done.\n\nRecorded by KeyTurn's Stop hook after the agent's final message. In IBM Bob 2.2.0 a Stop hook "
+  },
+  {
+   "check": "fresh proofs after the restart: VERIFIED again",
+   "ok": true,
+   "detail": "# KeyTurn done-check (2026-09-27T04:41:21.063102Z)\n\n**VERIFIED: all three proofs pass on the current state**\n\nThe agent's final message began (quoted, not interpreted):\n\n> Done.\n\nRecorded by KeyTurn's"
+  },
+  {
+   "check": "the summary covers only the current watch run and lists the earlier one separately",
+   "ok": true,
+   "detail": "{'samples': 77, 'ok': 75, 'failed': 2, 'failed_during_change': 2, 'failed_during_keyturn_tests': 0, 'from': '2026-09-27T04:34:39.874873Z', 'to': '2026-09-27T04:41:20.284386Z', 'longest_gap_s': 18.0, 'run_id': 'w20260927043438-190755', 'first_sample_ok': True, 'stopped_at': None, 'unobserved_gaps': [{'from': '2026-09-27T04:35:16Z', 'seconds': 18}, {'from': '2026-09-27T04:40:51Z', 'seconds': 17}], '"
+  },
+  {
+   "check": "watch stopped",
+   "ok": true,
+   "detail": "STOPPED"
+  },
+  {
+   "check": "state logs written",
+   "ok": true,
+   "detail": "['delayed.json', 'done-log.jsonl', 'gate-log.jsonl', 'keyturn-tests.jsonl', 'mcp-calls.jsonl', 'proofs-history.jsonl', 'proofs.json', 'stress.jsonl', 'verifier-seen.json', 'watch-run.json', 'watch.err', 'watch.jsonl', 'watch.pid', 'watch.stop']"
+  },
+  {
+   "check": "no secrets in state logs",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

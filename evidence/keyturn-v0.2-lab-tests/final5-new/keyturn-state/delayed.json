@@ -1,0 +1,12 @@
+{
+ "scheduled_id": "1",
+ "token": "8861400b",
+ "created_at": "2026-09-27T04:34:34.297104Z",
+ "snapshot": {
+  "old_exists": true,
+  "old_can_login": true,
+  "old_verifier_fp": "e20a7d94029c"
+ },
+ "made_due_at": "2026-09-27T04:36:33.584129Z",
+ "published_at": "2026-09-27 04:40:32.507979"
+}

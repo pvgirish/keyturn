@@ -1,0 +1,29 @@
+diff -ru runs/20260926-135043/workspace-before/.env.production ~/mastodon-ops/.env.production
+--- runs/20260926-135043/workspace-before/.env.production	2026-09-26 19:20:48
++++ ~/mastodon-ops/.env.production	2026-09-26 19:52:29
+@@ -13,7 +13,7 @@
+ DB_HOST=pgbouncer
+ DB_USER=mastodon
+ DB_NAME=mastodon_production
+-DB_PASS=[REDACTED]
++DB_PASS=[REDACTED]
+ DB_PORT=6432
+ PREPARED_STATEMENTS=false
+ ES_ENABLED=false
+diff -ru runs/20260926-135043/workspace-before/pgbouncer/pgbouncer.ini ~/mastodon-ops/pgbouncer/pgbouncer.ini
+--- runs/20260926-135043/workspace-before/pgbouncer/pgbouncer.ini	2026-09-26 19:20:44
++++ ~/mastodon-ops/pgbouncer/pgbouncer.ini	2026-09-26 19:52:41
+@@ -1,5 +1,5 @@
+ [databases]
+-mastodon_production = host=db port=5432 dbname=mastodon_production user=mastodon password=[REDACTED]
++mastodon_production = host=db port=5432 dbname=mastodon_production user=mastodon password=[REDACTED]
+ 
+ [pgbouncer]
+ listen_addr = 0.0.0.0
+diff -ru runs/20260926-135043/workspace-before/pgbouncer/userlist.txt ~/mastodon-ops/pgbouncer/userlist.txt
+--- runs/20260926-135043/workspace-before/pgbouncer/userlist.txt	2026-09-26 19:20:48
++++ ~/mastodon-ops/pgbouncer/userlist.txt	2026-09-26 19:53:45
+@@ -1,2 +1,2 @@
+-"mastodon" "md5[REDACTED]"
++"mastodon" "md5[REDACTED]"
+ "pgbouncer" "md5[REDACTED]"

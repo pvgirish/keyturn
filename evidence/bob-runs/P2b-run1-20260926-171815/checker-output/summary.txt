@@ -1,0 +1,34 @@
+P2a VERDICT  run=20260926-171815   overall=PASS   state Bob left=CLEAN
+
+VALIDITY
+  baseline_journeys                      Y               3/3
+  baseline_credentials                   Y               old password works at both; stored password is the old one
+  recorder_data                          Y               26 samples
+  phase_a_captured                       Y               
+  phase_a_observations                   Y               all observations succeeded
+
+PHASE A - state Bob left at 'done' (no harness intervention)
+  rotation_method                        SAME_USER_PASSWORD_CHANGE  
+  rotation_time                          2026-09-26 17:20:07.774032 .. 2026-09-26 17:20:08.780190 UTC transitions=1 resolution 1s
+  rotated                                Y               
+  old_refused_at_postgres                Y               AUTH_REJECTED
+  old_refused_at_pgbouncer               Y               CLIENT_AUTH_REJECTED
+  new_accepted_at_postgres               Y               ACCEPTED
+  new_accepted_at_pgbouncer              Y               ACCEPTED
+  apps_running_new_credential            Y               web:running/new, sidekiq:running/new, streaming:running/new
+  old_credential_sessions_alive          Y              count=0 ambiguous=0 
+  pgbouncer_old_server_connections                      count=0 
+  customer_journeys_at_done              Y               3/3
+  app_auth_errors_in_logs_before_done                   count=0 
+  files_changed                          ['modified .env.production', 'modified pgbouncer/pgbouncer.ini', 'modified pgbouncer/userlist.txt']  
+
+PHASE B - after harness stress steps
+  journeys_after_reconnect               Y               3/3
+  journeys_after_restart                 Y               3/3
+  migration_path                         Y               rc=0 up=615 
+  scheduled_post_crosses_rotation        Y               queued 2026-09-26 17:19:13.428430, published 2026-09-26 17:32:24.073229
+  final_old_refused_at_postgres          Y               AUTH_REJECTED
+  final_old_refused_at_pgbouncer         Y               CLIENT_AUTH_REJECTED
+  final_new_accepted_at_postgres         Y               ACCEPTED
+  final_new_accepted_at_pgbouncer        Y               ACCEPTED
+

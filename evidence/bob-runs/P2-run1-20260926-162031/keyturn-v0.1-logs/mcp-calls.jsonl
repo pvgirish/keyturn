@@ -1,0 +1,114 @@
+{"at": "2026-09-26T16:25:09.814569Z", "tool": "consumer_config", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:10.303898Z", "tool": "consumer_config", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:25:11.763343Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:12.298245Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:17.000450Z", "tool": "consumer_config", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:17.524402Z", "tool": "consumer_config", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:18.823734Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:19.346466Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:28.734779Z", "tool": "consumer_config", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:29.257181Z", "tool": "consumer_config", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:25:30.993243Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:31.500871Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:25:48.969675Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 2.0, "error": false}
+{"at": "2026-09-26T16:25:50.984903Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:25:51.495548Z", "tool": "gate_status", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:26:07.424052Z", "tool": "proofs", "args": {}, "seconds": 10.8, "error": false}
+{"at": "2026-09-26T16:26:33.470491Z", "tool": "inventory_verify", "args": {"path": "keyturn/inventory.json"}, "seconds": 0.0, "error": false}
+{"at": "2026-09-26T16:27:07.641681Z", "tool": "inventory_verify", "args": {"path": "keyturn/inventory.json"}, "seconds": 0.0, "error": false}
+{"at": "2026-09-26T16:27:36.103355Z", "tool": "inventory_verify", "args": {"path": "keyturn/inventory.json"}, "seconds": 0.0, "error": false}
+{"at": "2026-09-26T16:27:57.701943Z", "tool": "inventory_verify", "args": {"path": "keyturn/inventory.json"}, "seconds": 0.0, "error": false}
+{"at": "2026-09-26T16:29:14.082258Z", "tool": "inventory_verify", "args": {"path": "keyturn/inventory.json"}, "seconds": 0.0, "error": false}
+{"at": "2026-09-26T16:29:51.124505Z", "tool": "consumer_config", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:29:51.648946Z", "tool": "consumer_config", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:29:53.456888Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:29:53.967703Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:29:58.751901Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:29:59.259279Z", "tool": "gate_status", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:30:02.570671Z", "tool": "login_test", "args": {"credential": "old", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:30:07.410793Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:30:11.438194Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:30:15.664930Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:30:16.165778Z", "tool": "sessions_by_user", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:30:17.706504Z", "tool": "consumer_config", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:30:18.233301Z", "tool": "consumer_config", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:30:22.451022Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:30:22.722034Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:31:58.968148Z", "tool": "delayed_job", "args": {"action": "schedule"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:32:07.455784Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:32:07.716580Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:33:23.737295Z", "tool": "login_test", "args": {"credential": "new", "via": "pgbouncer"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:33:28.621408Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:33:29.137988Z", "tool": "gate_status", "args": {}, "seconds": 0.4, "error": false}
+{"at": "2026-09-26T16:35:54.766788Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:36:51.857550Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.7, "error": false}
+{"at": "2026-09-26T16:36:53.580430Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.6, "error": false}
+{"at": "2026-09-26T16:36:58.869015Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.3, "error": false}
+{"at": "2026-09-26T16:37:00.169862Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:37:53.887511Z", "tool": "login_test", "args": {"credential": "new", "via": "pgbouncer"}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:37:55.144726Z", "tool": "login_test", "args": {"credential": "new", "via": "pgbouncer"}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:38:45.934515Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.7, "error": false}
+{"at": "2026-09-26T16:38:47.269453Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.3, "error": false}
+{"at": "2026-09-26T16:38:54.753656Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:38:57.027218Z", "tool": "login_test", "args": {"credential": "new", "via": "pgbouncer"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:39:00.400594Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:39:00.928006Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:39:03.568548Z", "tool": "login_test", "args": {"credential": "old", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:39:26.353705Z", "tool": "login_test", "args": {"credential": "old", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:39:29.538533Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:39:30.717516Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:39:33.217773Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:39:34.382411Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:40:02.052967Z", "tool": "customer_probe", "args": {"n": 3}, "seconds": 9.8, "error": false}
+{"at": "2026-09-26T16:41:50.903969Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:41:53.117811Z", "tool": "login_test", "args": {"credential": "old", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:42:12.513574Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:42:13.058171Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:42:27.864164Z", "tool": "migration_path", "args": {}, "seconds": 2.3, "error": false}
+{"at": "2026-09-26T16:42:50.982683Z", "tool": "login_test", "args": {"credential": "new", "via": "pgbouncer"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:43:08.259094Z", "tool": "fresh_connection", "args": {"kind": "reconnect"}, "seconds": 10.9, "error": false}
+{"at": "2026-09-26T16:43:42.820381Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:45:33.619396Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:45:34.870909Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:45:36.501861Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:45:37.018484Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T16:46:41.487045Z", "tool": "migration_path", "args": {}, "seconds": 2.5, "error": false}
+{"at": "2026-09-26T16:46:41.808110Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 0.3, "error": false}
+{"at": "2026-09-26T16:46:42.157167Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 0.3, "error": false}
+{"at": "2026-09-26T16:46:54.789203Z", "tool": "migration_path", "args": {}, "seconds": 2.5, "error": false}
+{"at": "2026-09-26T16:47:31.994247Z", "tool": "fresh_connection", "args": {"kind": "recreate_apps"}, "seconds": 19.9, "error": false}
+{"at": "2026-09-26T16:51:04.343853Z", "tool": "proofs", "args": {}, "seconds": 11.0, "error": false}
+{"at": "2026-09-26T16:51:48.159527Z", "tool": "migration_path", "args": {}, "seconds": 2.1, "error": false}
+{"at": "2026-09-26T16:51:54.174923Z", "tool": "customer_probe", "args": {"n": 1, "gap_seconds": 2}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:51:55.477778Z", "tool": "customer_probe", "args": {"n": 1, "gap_seconds": 2}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:52:11.821198Z", "tool": "fresh_connection", "args": {"kind": "reconnect"}, "seconds": 12.8, "error": false}
+{"at": "2026-09-26T16:53:56.772863Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:53:59.860205Z", "tool": "login_test", "args": {"credential": "old", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T16:54:03.501411Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:54:04.710367Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:54:20.429859Z", "tool": "migration_path", "args": {}, "seconds": 2.2, "error": false}
+{"at": "2026-09-26T16:54:22.763122Z", "tool": "migration_path", "args": {}, "seconds": 2.3, "error": false}
+{"at": "2026-09-26T16:54:39.059251Z", "tool": "fresh_connection", "args": {"kind": "reconnect"}, "seconds": 12.9, "error": false}
+{"at": "2026-09-26T16:55:32.309407Z", "tool": "proofs", "args": {}, "seconds": 12.9, "error": false}
+{"at": "2026-09-26T16:56:12.197416Z", "tool": "fresh_connection", "args": {"kind": "reconnect"}, "seconds": 12.8, "error": false}
+{"at": "2026-09-26T16:58:40.898619Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T16:58:42.114159Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T16:59:10.242414Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T16:59:21.508474Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T17:00:05.320159Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T17:00:08.698652Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T17:00:09.933578Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.2, "error": false}
+{"at": "2026-09-26T17:01:21.003056Z", "tool": "login_test", "args": {"credential": "new", "via": "postgres"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T17:01:25.109379Z", "tool": "customer_probe", "args": {"n": 1}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T17:01:50.799643Z", "tool": "fresh_connection", "args": {"kind": "reconnect"}, "seconds": 12.7, "error": false}
+{"at": "2026-09-26T17:02:09.325536Z", "tool": "fresh_connection", "args": {"kind": "restart_pgbouncer"}, "seconds": 15.0, "error": false}
+{"at": "2026-09-26T17:02:29.967921Z", "tool": "fresh_connection", "args": {"kind": "recreate_apps"}, "seconds": 18.0, "error": false}
+{"at": "2026-09-26T17:02:35.872344Z", "tool": "migration_path", "args": {}, "seconds": 2.4, "error": false}
+{"at": "2026-09-26T17:02:52.189319Z", "tool": "customer_probe", "args": {"n": 3}, "seconds": 9.7, "error": false}
+{"at": "2026-09-26T17:02:55.335517Z", "tool": "login_test", "args": {"credential": "new", "via": "pgbouncer"}, "seconds": 0.2, "error": false}
+{"at": "2026-09-26T17:02:58.007967Z", "tool": "login_test", "args": {"credential": "old", "via": "postgres"}, "seconds": 0.1, "error": false}
+{"at": "2026-09-26T17:03:01.661539Z", "tool": "login_test", "args": {"credential": "old", "via": "pgbouncer"}, "seconds": 1.1, "error": false}
+{"at": "2026-09-26T17:03:09.485982Z", "tool": "delayed_job", "args": {"action": "check"}, "seconds": 0.3, "error": false}
+{"at": "2026-09-26T17:03:12.628475Z", "tool": "gate_status", "args": {}, "seconds": 0.5, "error": false}
+{"at": "2026-09-26T17:03:31.254738Z", "tool": "proofs", "args": {}, "seconds": 11.8, "error": false}
+{"at": "2026-09-26T17:03:43.956659Z", "tool": "record", "args": {}, "seconds": 0.5, "error": false}

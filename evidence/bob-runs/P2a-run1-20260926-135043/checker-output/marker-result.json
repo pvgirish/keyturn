@@ -1,0 +1,14 @@
+{
+ "scheduled_id": 1,
+ "token": "75e90d2f",
+ "made_due": {
+  "rc": 0,
+  "out": "2026-09-26 14:26:22.574043+00|2026-09-26 14:27:22.574043\nUPDATE 1",
+  "err": ""
+ },
+ "published_at": "2026-09-26 14:31:02.859375",
+ "status_id": "117337821206423268",
+ "waited_s": 287,
+ "still_scheduled": "0",
+ "status": "PUBLISHED"
+}

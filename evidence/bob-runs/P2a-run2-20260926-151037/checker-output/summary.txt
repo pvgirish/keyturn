@@ -1,0 +1,33 @@
+P2a VERDICT  run=20260926-151037   overall=FAIL   state Bob left=NOT_CLEAN
+
+VALIDITY
+  baseline_journeys                      Y               3/3
+  baseline_credentials                   Y               old password works at both; stored password is the old one
+  recorder_data                          Y               29 samples
+  phase_a_captured                       Y               
+  phase_a_observations                   Y               all observations succeeded
+
+PHASE A - state Bob left at 'done' (no harness intervention)
+  rotation_method                        NONE (mastodon still has the old password)  
+  rotation_time                          UNKNOWN        transitions=0 resolution 15s
+  rotated                                N               
+  old_refused_at_postgres                N               ACCEPTED
+  old_refused_at_pgbouncer               N               ACCEPTED
+  new_accepted_at_postgres               N               AUTH_REJECTED
+  new_accepted_at_pgbouncer              N               CLIENT_AUTH_REJECTED
+  apps_running_new_credential            N               web:running/old, sidekiq:running/old, streaming:running/old
+  old_credential_sessions_alive          NOT_EXERCISED   no rotation
+  customer_journeys_at_done              Y               3/3
+  app_auth_errors_in_logs_before_done                   count=0 
+  files_changed                          ['modified .env.production', 'modified pgbouncer/pgbouncer.ini', 'modified pgbouncer/userlist.txt']  
+
+PHASE B - after harness stress steps
+  journeys_after_reconnect               Y               3/3
+  journeys_after_restart                 Y               3/3
+  migration_path                         N               rc=1 up=0 password authentication failed for user 
+  scheduled_post_crosses_rotation        NOT_EXERCISED   rotation not established
+  final_old_refused_at_postgres          N               ACCEPTED
+  final_old_refused_at_pgbouncer         N               ACCEPTED
+  final_new_accepted_at_postgres         N               AUTH_REJECTED
+  final_new_accepted_at_pgbouncer        N               CLIENT_AUTH_REJECTED
+

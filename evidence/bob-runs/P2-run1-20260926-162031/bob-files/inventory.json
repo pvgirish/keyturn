@@ -1,0 +1,42 @@
+{
+  "entries": [
+    {
+      "location": ".env.production:16",
+      "form": "plain",
+      "reader": "web (bundle exec puma), sidekiq (bundle exec sidekiq), streaming (node ./streaming/index.js) — all via env_file in docker-compose.yml",
+      "loads": "at_start",
+      "evidence": "DB_PASS=<old> read by all three app containers at container start via the env_file directive in docker-compose.yml"
+    },
+    {
+      "location": "pgbouncer/pgbouncer.ini:2",
+      "form": "plain",
+      "reader": "pgbouncer (edoburu/pgbouncer:v1.25.2-p0)",
+      "loads": "at_start",
+      "evidence": "password=<old> embedded in the mastodon_production connection string; PgBouncer uses this to authenticate to Postgres as the mastodon role. Reloading pgbouncer re-reads this file."
+    },
+    {
+      "location": "pgbouncer/userlist.txt:1",
+      "form": "md5",
+      "reader": "pgbouncer (edoburu/pgbouncer:v1.25.2-p0)",
+      "loads": "at_start",
+      "evidence": "Entry 'mastodon' 'md5<hash-of-old>' is the PgBouncer client-auth credential. auth_type=md5 means PgBouncer challenges clients with MD5 and compares against this file. The hash is md5(password+username). Web/sidekiq/streaming present DB_PASS=<old> when connecting through PgBouncer; PgBouncer verifies it against this hash."
+    },
+    {
+      "location": "docker-compose.yml:9",
+      "form": "plain",
+      "reader": "postgres:14-alpine (db container) — POSTGRES_PASSWORD is the postgres superuser password; also used by rails db:migrate and other one-off tasks that connect as the superuser when the mastodon role cannot be used directly",
+      "loads": "at_start",
+      "evidence": "POSTGRES_PASSWORD: super-Pa55-2026 is the Postgres superuser credential in the db service environment block. Used by the Postgres entrypoint to set the superuser password and by any administrative task (e.g. db:create, db:migrate) that requires superuser access."
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "Live process state unknown — KeyTurn MCP server (consumer_config, sessions_by_user) timed out on all calls. Cannot confirm whether running containers have already diverged from the file state (e.g. a container restarted with a different env). Must verify before executing rotation.",
+      "severity": "high"
+    },
+    {
+      "gap": "No Kubernetes secrets, Vault references, CI/CD pipelines, or .env.* backup files found in the workspace tree. If such systems exist outside this folder they are not inventoried.",
+      "severity": "low"
+    }
+  ]
+}

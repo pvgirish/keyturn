@@ -1,0 +1,40 @@
+{
+ "run_id": "20260927-061243",
+ "workspace": "<workspace>",
+ "workspace_keyturn_folder": true,
+ "workspace_changes_since_setup": {
+  "added": [
+   "keyturn/DONE-CHECK.md"
+  ],
+  "removed": [],
+  "modified": []
+ },
+ "db_check": "old_password_accepted_at_postgres=yes",
+ "keyturn_mcp_calls": {
+  "total": 5,
+  "by_tool": {
+   "sessions_by_user": 1,
+   "gate_status": 1,
+   "consumer_config": 1,
+   "proofs": 1,
+   "inventory_verify": 1
+  },
+  "first": "2026-09-27T06:57:46.280890Z",
+  "last": "2026-09-27T06:58:37.171278Z"
+ },
+ "gate_decisions": [],
+ "done_checks": [
+  {
+   "at": "2026-09-27T06:58:57.269064Z",
+   "mode": "stop-check",
+   "result": "FAILED"
+  }
+ ],
+ "last_proofs": {
+  "at": "2026-09-27T06:58:21.686074Z",
+  "all_pass": false,
+  "version": null,
+  "digest": null
+ },
+ "secrets_replaced_in_copies": {}
+}

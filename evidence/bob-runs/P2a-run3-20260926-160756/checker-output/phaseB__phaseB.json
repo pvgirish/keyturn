@@ -1,0 +1,552 @@
+{
+ "captured_host_utc": "2026-09-26T16:17:05.709940Z",
+ "final_sample": {
+  "host_utc": "2026-09-26T16:17:05.710776Z",
+  "db_now": "2026-09-26 16:17:05.764525+00",
+  "roles": [
+   {
+    "role": "mastodon",
+    "verifier_md5": "47430304afdd86cad00279f9b34a999d",
+    "can_login": "t"
+   },
+   {
+    "role": "postgres",
+    "verifier_md5": "4fc1c00fe2ea6eedbea995143e108826",
+    "can_login": "t"
+   }
+  ],
+  "sessions": [
+   {
+    "pid": "466",
+    "user": "mastodon",
+    "backend_start": "2026-09-26 16:11:44.201686+00",
+    "from": "pgbouncer",
+    "state": "idle"
+   },
+   {
+    "pid": "467",
+    "user": "mastodon",
+    "backend_start": "2026-09-26 16:11:44.240938+00",
+    "from": "pgbouncer",
+    "state": "idle"
+   },
+   {
+    "pid": "468",
+    "user": "mastodon",
+    "backend_start": "2026-09-26 16:11:44.253344+00",
+    "from": "pgbouncer",
+    "state": "idle"
+   },
+   {
+    "pid": "469",
+    "user": "mastodon",
+    "backend_start": "2026-09-26 16:11:44.27112+00",
+    "from": "pgbouncer",
+    "state": "idle"
+   }
+  ],
+  "containers": {
+   "db": {
+    "id": "d950e60b9a73",
+    "status": "running",
+    "started_at": "2026-09-26T16:08:01.601612553Z",
+    "restarts": "0"
+   },
+   "redis": {
+    "id": "d661d1b2b5ce",
+    "status": "running",
+    "started_at": "2026-09-26T16:08:01.60107597Z",
+    "restarts": "0"
+   },
+   "pgbouncer": {
+    "id": "57075e7243eb",
+    "status": "running",
+    "started_at": "2026-09-26T16:08:04.076434763Z",
+    "restarts": "0"
+   },
+   "web": {
+    "id": "7bf23f4e3f33",
+    "status": "running",
+    "started_at": "2026-09-26T16:11:56.336416925Z",
+    "restarts": "0"
+   },
+   "sidekiq": {
+    "id": "167612e1e4e8",
+    "status": "running",
+    "started_at": "2026-09-26T16:11:57.010019009Z",
+    "restarts": "0"
+   },
+   "streaming": {
+    "id": "ca9ea9f9c278",
+    "status": "running",
+    "started_at": "2026-09-26T16:11:56.124637134Z",
+    "restarts": "0"
+   }
+  },
+  "files": {
+   ".env.production": "81b39a8c7fca26e4aeaad44b6f34ef07",
+   "docker-compose.yml": "47eb2d0dfb4ac2c25565eed11f75a3b6",
+   "new_password.txt": "fb7bb9a7c9fc00c0e2b7a24d95676f52",
+   "pgbouncer/pgbouncer.ini": "f69deea78216af6b75c0ccd44d9c2b6d",
+   "pgbouncer/userlist.txt": "4a6114cba4e12444d65b90b6db890ee5"
+  }
+ },
+ "captured_db_now": "2026-09-26 16:17:06.169478+00",
+ "roles": [
+  {
+   "role": "mastodon",
+   "can_login": true,
+   "has_old_password": true,
+   "has_new_password": false,
+   "verifier_kind": "SCRAM-SHA-256"
+  }
+ ],
+ "container_ips": {
+  "172.19.0.3": "db",
+  "172.19.0.2": "redis",
+  "172.19.0.4": "pgbouncer",
+  "172.19.0.5": "web",
+  "172.19.0.7": "sidekiq",
+  "172.19.0.6": "streaming"
+ },
+ "pg_sessions": [
+  {
+   "pid": "466",
+   "user": "mastodon",
+   "backend_start": "2026-09-26 16:11:44.201686+00",
+   "from": "pgbouncer",
+   "state": "idle",
+   "app": ""
+  },
+  {
+   "pid": "467",
+   "user": "mastodon",
+   "backend_start": "2026-09-26 16:11:44.240938+00",
+   "from": "pgbouncer",
+   "state": "idle",
+   "app": ""
+  },
+  {
+   "pid": "468",
+   "user": "mastodon",
+   "backend_start": "2026-09-26 16:11:44.253344+00",
+   "from": "pgbouncer",
+   "state": "idle",
+   "app": ""
+  },
+  {
+   "pid": "469",
+   "user": "mastodon",
+   "backend_start": "2026-09-26 16:11:44.27112+00",
+   "from": "pgbouncer",
+   "state": "idle",
+   "app": ""
+  }
+ ],
+ "pgbouncer_clients": [
+  {
+   "type": "C",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.5",
+   "port": "57934",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:12:03 UTC",
+   "request_time": "2026-09-26 16:12:23 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700e3b0",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "36",
+   "addr_name": "web"
+  },
+  {
+   "type": "C",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.5",
+   "port": "57950",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:12:04 UTC",
+   "request_time": "2026-09-26 16:12:20 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700f520",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "40",
+   "addr_name": "web"
+  },
+  {
+   "type": "C",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.7",
+   "port": "46762",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:12:03 UTC",
+   "request_time": "2026-09-26 16:17:00 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700ef50",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "38",
+   "addr_name": "sidekiq"
+  },
+  {
+   "type": "C",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.7",
+   "port": "46774",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:12:03 UTC",
+   "request_time": "2026-09-26 16:17:00 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700e698",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "39",
+   "addr_name": "sidekiq"
+  },
+  {
+   "type": "C",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.7",
+   "port": "46740",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:12:01 UTC",
+   "request_time": "2026-09-26 16:17:00 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700ec68",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "35",
+   "addr_name": "sidekiq"
+  },
+  {
+   "type": "C",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.7",
+   "port": "46752",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:12:03 UTC",
+   "request_time": "2026-09-26 16:17:00 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700e980",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "37",
+   "addr_name": "sidekiq"
+  },
+  {
+   "type": "C",
+   "user": "pgbouncer",
+   "database": "pgbouncer",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.3",
+   "port": "49008",
+   "local_addr": "172.19.0.4",
+   "local_port": "6432",
+   "connect_time": "2026-09-26 16:17:06 UTC",
+   "request_time": "2026-09-26 16:17:06 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff9700f238",
+   "link": "",
+   "remote_pid": "0",
+   "tls": "",
+   "application_name": "psql",
+   "prepared_statements": "0",
+   "id": "42",
+   "addr_name": "db"
+  }
+ ],
+ "pgbouncer_servers": [
+  {
+   "type": "S",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.3",
+   "port": "5432",
+   "local_addr": "172.19.0.4",
+   "local_port": "36100",
+   "connect_time": "2026-09-26 16:11:44 UTC",
+   "request_time": "2026-09-26 16:17:00 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff96f855d0",
+   "link": "",
+   "remote_pid": "467",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "30",
+   "addr_name": "db"
+  },
+  {
+   "type": "S",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "idle",
+   "addr": "172.19.0.3",
+   "port": "5432",
+   "local_addr": "172.19.0.4",
+   "local_port": "36116",
+   "connect_time": "2026-09-26 16:11:44 UTC",
+   "request_time": "2026-09-26 16:17:00 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff96f85e88",
+   "link": "",
+   "remote_pid": "469",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "32",
+   "addr_name": "db"
+  },
+  {
+   "type": "S",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "used",
+   "addr": "172.19.0.3",
+   "port": "5432",
+   "local_addr": "172.19.0.4",
+   "local_port": "36094",
+   "connect_time": "2026-09-26 16:11:44 UTC",
+   "request_time": "2026-09-26 16:12:16 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff96f858b8",
+   "link": "",
+   "remote_pid": "466",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "29",
+   "addr_name": "db"
+  },
+  {
+   "type": "S",
+   "user": "mastodon",
+   "database": "mastodon_production",
+   "replication": "none",
+   "state": "used",
+   "addr": "172.19.0.3",
+   "port": "5432",
+   "local_addr": "172.19.0.4",
+   "local_port": "36112",
+   "connect_time": "2026-09-26 16:11:44 UTC",
+   "request_time": "2026-09-26 16:11:44 UTC",
+   "wait": "0",
+   "wait_us": "0",
+   "close_needed": "0",
+   "ptr": "0xffff96f85ba0",
+   "link": "",
+   "remote_pid": "468",
+   "tls": "",
+   "application_name": "",
+   "prepared_statements": "0",
+   "id": "31",
+   "addr_name": "db"
+  }
+ ],
+ "pgbouncer_pools": [
+  {
+   "database": "mastodon_production",
+   "user": "mastodon",
+   "cl_active": "6",
+   "cl_waiting": "0",
+   "cl_active_cancel_req": "0",
+   "cl_waiting_cancel_req": "0",
+   "sv_active": "0",
+   "sv_active_cancel": "0",
+   "sv_being_canceled": "0",
+   "sv_idle": "2",
+   "sv_used": "2",
+   "sv_tested": "0",
+   "sv_login": "0",
+   "maxwait": "0",
+   "maxwait_us": "0",
+   "pool_mode": "transaction",
+   "load_balance_hosts": ""
+  },
+  {
+   "database": "pgbouncer",
+   "user": "pgbouncer",
+   "cl_active": "1",
+   "cl_waiting": "0",
+   "cl_active_cancel_req": "0",
+   "cl_waiting_cancel_req": "0",
+   "sv_active": "0",
+   "sv_active_cancel": "0",
+   "sv_being_canceled": "0",
+   "sv_idle": "0",
+   "sv_used": "0",
+   "sv_tested": "0",
+   "sv_login": "0",
+   "maxwait": "0",
+   "maxwait_us": "0",
+   "pool_mode": "statement",
+   "load_balance_hosts": ""
+  }
+ ],
+ "apps": {
+  "web": {
+   "DB_USER": "mastodon",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "old",
+   "status": "running",
+   "started_at": "2026-09-26T16:11:56.336416925Z",
+   "id": "7bf23f4e3f33"
+  },
+  "sidekiq": {
+   "DB_USER": "mastodon",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "old",
+   "status": "running",
+   "started_at": "2026-09-26T16:11:57.010019009Z",
+   "id": "167612e1e4e8"
+  },
+  "streaming": {
+   "DB_USER": "mastodon",
+   "DB_HOST": "pgbouncer",
+   "DB_PORT": "6432",
+   "DB_PASS_is": "old",
+   "status": "running",
+   "started_at": "2026-09-26T16:11:56.124637134Z",
+   "id": "ca9ea9f9c278"
+  }
+ },
+ "files_changed": [
+  "modified .env.production",
+  "modified pgbouncer/pgbouncer.ini",
+  "modified pgbouncer/userlist.txt"
+ ],
+ "new_user_tested": "mastodon",
+ "login_tests": {
+  "old-direct": {
+   "user": "mastodon",
+   "result": "ACCEPTED",
+   "stderr_tail": "",
+   "pgbouncer_log": []
+  },
+  "new-direct": {
+   "user": "mastodon",
+   "result": "AUTH_REJECTED",
+   "stderr_tail": "psql: error: connection to server at \"db\" (172.19.0.3), port 5432 failed: FATAL:  password authentication failed for user \"mastodon\"",
+   "pgbouncer_log": []
+  },
+  "old-via-pgbouncer": {
+   "user": "mastodon",
+   "result": "ACCEPTED",
+   "stderr_tail": "",
+   "pgbouncer_log": [
+    "2026-09-26 16:17:15.189 UTC [1] LOG C-0xffff9700f238: mastodon_production/mastodon@172.19.0.3:40920 login attempt: db=mastodon_production user=mastodon tls=no replication=no",
+    "2026-09-26 16:17:15.191 UTC [1] LOG C-0xffff9700f238: mastodon_production/mastodon@172.19.0.3:40920 closing because: client close request (age=0s)"
+   ]
+  },
+  "new-via-pgbouncer": {
+   "user": "mastodon",
+   "result": "CLIENT_AUTH_REJECTED",
+   "stderr_tail": "psql: error: connection to server at \"pgbouncer\" (172.19.0.4), port 6432 failed: FATAL:  password authentication failed",
+   "pgbouncer_log": [
+    "2026-09-26 16:17:18.364 UTC [1] LOG C-0xffff9700f238: mastodon_production/mastodon@172.19.0.3:40932 login attempt: db=mastodon_production user=mastodon tls=no replication=no",
+    "2026-09-26 16:17:18.365 UTC [1] LOG C-0xffff9700f238: mastodon_production/mastodon@172.19.0.3:40932 closing because: password authentication failed (age=0s)",
+    "2026-09-26 16:17:18.365 UTC [1] WARNING C-0xffff9700f238: mastodon_production/mastodon@172.19.0.3:40932 pooler error: password authentication failed"
+   ]
+  }
+ },
+ "probes_at_done": [
+  {
+   "t": "21:47:19",
+   "label": "post-stress-1",
+   "post": 200,
+   "timeline": "ok",
+   "stream": 200,
+   "health": 200,
+   "ok": true
+  },
+  {
+   "t": "21:47:25",
+   "label": "post-stress-2",
+   "post": 200,
+   "timeline": "ok",
+   "stream": 200,
+   "health": 200,
+   "ok": true
+  },
+  {
+   "t": "21:47:32",
+   "label": "post-stress-3",
+   "post": 200,
+   "timeline": "ok",
+   "stream": 200,
+   "health": 200,
+   "ok": true
+  }
+ ],
+ "observation_errors": []
+}
