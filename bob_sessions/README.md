@@ -22,3 +22,21 @@ Usage after P3 (read from Settings → General on 27 Sep, about 12:35 IST): **39
 | (new task, 27 Sep) | 0.121 | P3: Bob + KeyTurn 0.2.1, read-only check | Task header in `../evidence/bob-screens/P3-v0.2.1/` |
 
 These seven tasks total 38.54 coins. The remaining 0.85 of the 39.39 are tasks in other workspaces, including the two hook-probe tasks (A and B).
+
+## Task session consumption summaries (per the hackathon guide: select the task header → screenshot)
+Captured 27 Sep 2026, about 18:10 IST, from IBM Bob 2.2.0 (task header → consumption summary). Every task related to this project, in all workspaces:
+
+| File | Task | Workspace | Bobcoins |
+|---|---|---|---|
+| `03-task-summary-P3-bob-keyturn-0.2.1-readonly-0.121.png` | P3: Bob + KeyTurn 0.2.1, read-only check | mastodon-ops | 0.121 |
+| `04-task-summary-P2-bob-keyturn-v0.1-35.07.png` | P2: Bob + KeyTurn v0.1, full handover | mastodon-ops | 35.07 |
+| `05-task-summary-P2b-plain-bob-outcome-spelled-out-2.42.png` | P2b: plain Bob, outcome spelled out | mastodon-ops | 2.42 |
+| `06-task-summary-P2a-run1-plain-bob-0.372.png` | P2a run 1: plain Bob, short request | mastodon-ops | 0.372 |
+| `07-task-summary-P2a-run2-plain-bob-0.230.png` | P2a run 2 | mastodon-ops | 0.230 |
+| `08-task-summary-P2a-run3-plain-bob-0.160.png` | P2a run 3 | mastodon-ops | 0.160 |
+| `09-task-summary-invalid-attempt-pasted-report-0.168.png` | invalid attempt (the run 1 report was pasted instead of the prompt; declared invalid) | mastodon-ops | 0.168 |
+| `10-task-summary-hook-probe-A-0.057.png` | hook probe A (see `lab/hook-probe/`) | bob-hook-probe-A | 0.057 |
+| `11-task-summary-hook-probe-B-0.115.png` | hook probe B (see `lab/hook-probe/`) | bob-hook-probe-B | 0.115 |
+| `12-all-tasks-all-workspaces.png` | the Tasks list, all workspaces: these nine tasks | — | — |
+
+These nine tasks total 38.71 Bobcoins of the 39.39 shown in Settings → General; the rest is not linked to a task in this list. Only one person used Bob on team TeamPVG-CG-CC.
