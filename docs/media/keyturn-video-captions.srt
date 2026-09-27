@@ -1,108 +1,103 @@
 1
-00:00:00,400 --> 00:00:05,190
-Changing password files does not finish a database password change.
+00:00:02,020 --> 00:00:09,220
+We built KeyTurn for a gap we observed in IBM Bob's database password-change workflow.
 
 2
-00:00:06,300 --> 00:00:15,750
-KeyTurn gives engineers a handover record: apps work, old access is refused, and queued jobs still finish.
+00:00:10,580 --> 00:00:15,580
+The files were updated, but the live database still used the old password.
 
 3
-00:00:16,800 --> 00:00:21,910
-Here is our real IBM Bob run, using KeyTurn version 0.1.
+00:00:16,760 --> 00:00:23,740
+That leaves access open and can break the next software update, even when the application looks healthy.
 
 4
-00:00:23,880 --> 00:00:31,790
-With KeyTurn’s custom modes and tools, Bob traced the credential copies, planned the change and ran the checks.
+00:00:25,060 --> 00:00:33,240
+We saw this in three short-request trials on Mastodon, a real social application in our lab.
 
 5
-00:00:32,340 --> 00:00:33,930
-Every final check passed.
+00:00:34,800 --> 00:00:38,780
+Bob edited the files and listed live changes as next steps.
 
 6
-00:00:36,200 --> 00:00:42,200
-Latest check with KeyTurn 0.2.1 (read-only): Bob found the half-changed handover “not complete”. It changed nothing.
+00:00:39,760 --> 00:00:41,480
+It did not change the live password.
 
 7
-00:00:43,000 --> 00:00:48,130
-Apps, connection pool and database must agree on the new credential.
+00:00:42,400 --> 00:00:49,640
+Our checks found the old password accepted, the new password refused, and the next-update test failing.
 
 8
-00:00:48,900 --> 00:00:55,050
-This next demo uses version 0.2.1, operated by a script.
+00:00:51,080 --> 00:00:57,240
+In one run where we stated the outcome, Bob completed the change.
 
 9
-00:00:55,320 --> 00:00:59,170
-The files changed; the live password did not.
+00:00:58,440 --> 00:01:03,860
+KeyTurn turns those requirements into repeatable checks of the running system.
 
 10
-00:01:00,040 --> 00:01:03,950
-KeyTurn records the simulated completion claim as FAILED.
+00:01:05,280 --> 00:01:12,660
+It checks that the app uses the new password, old access is retired, and queued work finishes.
 
 11
-00:01:05,100 --> 00:01:11,550
-The gate refuses this app restart: the database would reject the new password.
+00:01:14,160 --> 00:01:17,660
+It checks risky operations and saves the evidence.
 
 12
-00:01:12,580 --> 00:01:18,610
-We schedule a customer post, then start monitoring with a passing sample.
+00:01:18,520 --> 00:01:23,400
+Bob used KeyTurn to complete one handover on the first version.
 
 13
-00:01:20,300 --> 00:01:26,790
-We change the database password, reload the pool and restart the apps.
+00:01:24,420 --> 00:01:30,640
+With the current version, it inspected an unfinished change and called it incomplete.
 
 14
-00:01:28,320 --> 00:01:34,580
-Customers pass again, but three of ten sampled journeys failed during restart.
+00:01:32,040 --> 00:01:35,020
+Now watch the current product, operated by a script.
 
 15
-00:01:34,600 --> 00:01:37,510
-The record shows that interruption.
+00:01:35,920 --> 00:01:39,460
+The files are updated, but the live password is unchanged.
 
 16
-00:01:38,700 --> 00:01:47,430
-Next, KeyTurn recreates the apps, forces fresh connections, restarts the pool and runs the migration.
+00:01:39,460 --> 00:01:47,660
+KeyTurn reports FAILED and refuses a restart because the database rejects the new password.
 
 17
-00:01:48,560 --> 00:01:53,510
-It also confirms that the post queued before the change was published.
+00:01:49,280 --> 00:01:59,160
+We queue a post, start monitoring, then change the database password, reload the connection pool, and restart the apps.
 
 18
-00:01:55,400 --> 00:01:58,130
-The final checks pass: VERIFIED.
+00:02:01,400 --> 00:02:05,220
+Three of ten customer samples fail during the change.
 
 19
-00:01:59,260 --> 00:02:09,170
-A later tracked-file change or detected service restart invalidates that result until checks run again.
+00:02:05,220 --> 00:02:08,680
+KeyTurn records that interruption.
 
 20
-00:02:12,900 --> 00:02:19,050
-The handover record shows the checks, refusals and measured customer impact.
+00:02:10,320 --> 00:02:15,640
+Then it tests fresh connections, restarts, and the queued post.
 
 21
-00:02:19,900 --> 00:02:26,050
-Plain Bob left the live password unchanged in three short-request runs.
+00:02:16,660 --> 00:02:20,500
+The new password works. The old password is rejected.
 
 22
-00:02:27,460 --> 00:02:30,350
-Bob with KeyTurn passed its one run.
+00:02:21,340 --> 00:02:25,300
+Old connections are closed. The post is published.
 
 23
-00:02:31,660 --> 00:02:35,680
-Plain Bob also passed with an explicit outcome request.
+00:02:26,800 --> 00:02:31,780
+KeyTurn reports VERIFIED and saves the handover record.
 
 24
-00:02:35,700 --> 00:02:40,410
-Our value is reusable checks and a record.
+00:02:31,780 --> 00:02:36,780
+The change is complete. Tracked changes require fresh checks.
 
 25
-00:02:41,100 --> 00:02:48,470
-Today: one deployment shape, covered commands and sampled customer checks.
+00:02:38,700 --> 00:02:45,720
+Eighty-one unit tests passed, plus checks for both supported password-change methods.
 
 26
-00:02:49,400 --> 00:02:51,230
-No zero-downtime promise.
-
-27
-00:02:52,620 --> 00:02:56,330
-KeyTurn makes “done” a result you can check.
-
+00:02:48,940 --> 00:02:56,100
+KeyTurn. New password working. Old password rejected. A record you can check.

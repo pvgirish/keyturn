@@ -3,7 +3,7 @@
 **KeyTurn helps engineers check that a planned database password change is complete: customers work with the new credential, the old one is refused, and reconnects and queued jobs still succeed.** IBM Bob investigates and performs the handover; KeyTurn checks the measured result and keeps a handover record.
 
 - **Demo page:** https://pvgirish.github.io/keyturn/ (video, a real handover record, a replay of the real lab run, the Bob evidence)
-- **Video (2 min 57 s):** [docs/media/keyturn-video.mp4](docs/media/keyturn-video.mp4)
+- **Video (2 min 58 s):** [docs/media/keyturn-video.mp4](docs/media/keyturn-video.mp4) · **Slides:** [docs/media/keyturn-slides.pdf](docs/media/keyturn-slides.pdf)
 - Built for the IBM Bob 2.0 hackathon (lablab.ai, 25–27 Sep 2026) by team TeamPVG-CG-CC. MIT licence.
 
 ## The problem
